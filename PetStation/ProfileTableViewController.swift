@@ -13,9 +13,10 @@ class ProfileTableViewController: UITableViewController {
     
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     let storageRef: StorageReference = Storage.storage().reference()
-    var name: String?
-    var weight: Float?
-    var gender: Int?
+    var name: String = ""
+    var weight: Float = 0.0
+    var gender: String = ""
+    var photopath: String = ""
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,10 +36,11 @@ class ProfileTableViewController: UITableViewController {
                 return
             }
             
-            self.name = pet["name"] as? String
-            self.weight = pet["weight"] as? Float
-            self.gender = pet["gender"] as? Int
-            
+            self.name = pet["name"] as? String ?? "Unknown"
+            self.weight = pet["weight"] as? Float ?? 0.0
+            self.gender = pet["gender"] as? String ?? "Unknown"
+            self.photopath = pet["photopath"] as? String ?? "?"
+            self.tableView.reloadData()
         }
     }
     
@@ -76,17 +78,37 @@ class ProfileTableViewController: UITableViewController {
         switch indexPath.row {
         case 0:
             cell.textLabel?.text = "Photo"
+            cell.detailTextLabel?.text = self.photopath
         case 1:
             cell.textLabel?.text = "Name"
+            cell.detailTextLabel?.text = self.name
         case 2:
             cell.textLabel?.text = "Gender"
+            cell.detailTextLabel?.text = self.gender
         case 3:
             cell.textLabel?.text = "Weight"
+            cell.detailTextLabel?.text = String(self.weight)
         default:
             break
         }
 
         return cell
+    }
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case 0:
+            self.performSegue(withIdentifier: "PhotoSegue", sender: nil)
+        case 1:
+            self.performSegue(withIdentifier: "NameSegue", sender: nil)
+        case 2:
+            self.performSegue(withIdentifier: "GenderSegue", sender: nil)
+        case 3:
+            self.performSegue(withIdentifier: "WeightSegue", sender: nil)
+        default:
+            break
+        }
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
 
