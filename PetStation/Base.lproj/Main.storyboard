@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="S1J-yI-crf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14460.31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="S1J-yI-crf">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -111,12 +111,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Pet Profile" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zei-jk-A4N">
-                                <rect key="frame" x="148" y="323" width="79" height="21"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Set Photo" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Zei-jk-A4N">
+                                <rect key="frame" x="149.5" y="323" width="76" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Qga-Rj-1SZ">
+                                <rect key="frame" x="67" y="97" width="240" height="128"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
@@ -125,12 +129,40 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="wHG-HE-fEm"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Pet Profile" id="OWG-Wz-IcG"/>
+                    <tabBarItem key="tabBarItem" title="Pet Profile" image="pawprint-64" id="OWG-Wz-IcG"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ou2-8K-aqd" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3681" y="-573"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="C1U-6U-gEF">
+            <objects>
+                <viewController id="ulf-bh-VcP" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="aLz-n7-WvJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cNS-AV-Iug">
+                                <rect key="frame" x="8" y="28" width="359" height="359"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" secondItem="cNS-AV-Iug" secondAttribute="height" multiplier="1:1" id="yj5-cO-owT"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="cNS-AV-Iug" firstAttribute="leading" secondItem="HNU-0g-fIC" secondAttribute="leading" constant="8" id="6lR-ZB-RGb"/>
+                            <constraint firstItem="cNS-AV-Iug" firstAttribute="top" secondItem="HNU-0g-fIC" secondAttribute="top" constant="8" id="Sws-q4-ZTk"/>
+                            <constraint firstItem="HNU-0g-fIC" firstAttribute="trailing" secondItem="cNS-AV-Iug" secondAttribute="trailing" constant="8" id="Utw-Es-ci3"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="HNU-0g-fIC"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="94h-UA-6K2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4585" y="-573"/>
         </scene>
         <!--View Controller-->
         <scene sceneID="cZi-Pq-BVW">
@@ -181,7 +213,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="4Qy-ec-jbC"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Statistics" id="TSM-BP-INa"/>
+                    <tabBarItem key="tabBarItem" title="Statistics" image="statistics-64" id="TSM-BP-INa"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9K-Qb-1Uz" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -238,7 +270,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e8V-PK-1nK"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Feeder" id="ZNQ-Mf-JwQ"/>
+                    <tabBarItem key="tabBarItem" title="Feeder" image="dog-food-bowl-64" id="ZNQ-Mf-JwQ"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="amountSegment" destination="MaP-Gn-cmO" id="3h0-Dx-3TE"/>
@@ -327,7 +359,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="1ox-h2-qdt"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Play" id="JzC-8J-ijb"/>
+                    <tabBarItem key="tabBarItem" title="Play" image="gamepad-64" id="JzC-8J-ijb"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="videoView" destination="jxc-Fb-cUs" id="y92-he-WI1"/>
@@ -359,7 +391,7 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Wvn-00-lbI"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Home" id="88g-yU-RiO"/>
+                    <tabBarItem key="tabBarItem" title="Home" image="home-64" id="88g-yU-RiO"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nDJ-MZ-cE1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -407,4 +439,11 @@
             <point key="canvasLocation" x="257" y="134"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="dog-food-bowl-64" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="gamepad-64" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="home-64" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="pawprint-64" width="51.200000762939453" height="51.200000762939453"/>
+        <image name="statistics-64" width="51.200000762939453" height="51.200000762939453"/>
+    </resources>
 </document>
