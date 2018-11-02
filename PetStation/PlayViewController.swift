@@ -11,17 +11,24 @@ import AVKit
 import YouTubePlayer_Swift
 import Firebase
 
+enum Move: Int {
+    case stop
+    case forward
+    case backward
+    case right
+    case left
+}
 
 class PlayViewController: UIViewController {
     
-    var uid: String?
+//    var uid: String?
     @IBOutlet weak var videoView: YouTubePlayerView!
-    let databaseRef : DatabaseReference = Database.database().reference().child("petstation").child("users")
-    var ref: DatabaseReference!
+    let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
+//    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        uid = getCurrentUser()
+//        uid = getCurrentUser()
         // Do any additional setup after loading the view.
     }
     
@@ -53,59 +60,52 @@ class PlayViewController: UIViewController {
         }
     }
 
-    //0 = stop
-    //1 = move forward
-    //2 = move backward
-    //3 = move right
-    //4 = move left
     @IBAction func up(_ sender: UIButton) {
-        setDirection(1)
+        setDirection(.forward)
     }
     
     @IBAction func stopUp(_ sender: UIButton) {
         //after the button is release, set number to 0 to stop toy moving
-        setDirection(0)
+        setDirection(.stop)
     }
-    
     
     @IBAction func down(_ sender: Any) {
-        setDirection(2)
+        setDirection(.backward)
     }
-    
     
     @IBAction func stopDown(_ sender: Any) {
-        setDirection(0)
+        setDirection(.stop)
     }
-    
-    
     
     @IBAction func right(_ sender: Any) {
-        setDirection(3)
+        setDirection(.right)
     }
     
-    
     @IBAction func stopRight(_ sender: Any) {
-        setDirection(0)
+        setDirection(.stop)
     }
     
     @IBAction func left(_ sender: UIButton) {
-        //print("turn left")
-        setDirection(4)
+        setDirection(.left)
     }
     
     @IBAction func stopLeft(_ sender: UIButton) {
-        //print("stop turning left")
-        setDirection(0)
+        setDirection(.stop)
     }
     
-    func setDirection(_ num: Int) {
+    func setDirection(_ move: Move) {
 //        self.ref.child("petstation/users/\(uid!)/toy/action").setValue(num)
         guard let uid = getCurrentUser() else {
             return
         }
         
         //this value will be stored in the firebase and pass to pi, then toy changes moving direction accordingly
-        databaseRef.child(uid).child("toy/action").setValue(num)
+        //0 = stop
+        //1 = move forward
+        //2 = move backward
+        //3 = move right
+        //4 = move left
+        databaseRef.child(uid).child("toy/action").setValue(move.rawValue)
     }
     
     /*
