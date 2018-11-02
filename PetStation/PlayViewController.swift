@@ -37,8 +37,8 @@ class PlayViewController: UIViewController {
         //uid = getCurrentUser()
         
         
-        videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
-        videoView.loadVideoID("tvw6nOEMYL4") //cP_x1QoQub8, l7K2XiXzrqo
+        self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
+        self.videoView.loadVideoID("tvw6nOEMYL4") //cP_x1QoQub8, l7K2XiXzrqo
         
     }
     
@@ -53,10 +53,10 @@ class PlayViewController: UIViewController {
     @IBAction func play(_ sender: UIButton) {
         if sender.titleLabel?.text == "Play" {
             sender.setTitle("Pause", for: UIControl.State.normal)
-            videoView.play()
+            self.videoView.play()
         } else {
             sender.setTitle("Play", for: UIControl.State.normal)
-            videoView.pause()
+            self.videoView.pause()
         }
     }
 
@@ -105,7 +105,7 @@ class PlayViewController: UIViewController {
         //2 = move backward
         //3 = move right
         //4 = move left
-        databaseRef.child(uid).child("toy/action").setValue(move.rawValue)
+        self.databaseRef.child(uid).child("toy/action").setValue(move.rawValue)
     }
     
     /*
