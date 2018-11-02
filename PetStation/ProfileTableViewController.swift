@@ -12,11 +12,12 @@ import Firebase
 class ProfileTableViewController: UITableViewController {
     
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
-    let storageRef: StorageReference = Storage.storage().reference()
+    let storageRef: Storage = Storage.storage()
     var name: String = ""
     var weight: Float = 0.0
     var gender: String = ""
     var photopath: String = ""
+    var photo: UIImage?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,8 +40,68 @@ class ProfileTableViewController: UITableViewController {
             self.name = pet["name"] as? String ?? "Unknown"
             self.weight = pet["weight"] as? Float ?? 0.0
             self.gender = pet["gender"] as? String ?? "Unknown"
-            self.photopath = pet["photopath"] as? String ?? "?"
+            let url = pet["photopath"] as? String ?? "?"
+//            let fileName = pet["fileName"] as! String
             self.tableView.reloadData()
+            
+//            if self.photopath != url {
+//                self.photopath = url
+//                if self.localFileExists(fileName: fileName) {
+//                    if let image = self.loadImageData(fileName: fileName) {
+//                        self.photo = image
+////                        self.collectionView?.reloadSections([0])
+//                    }
+//                } else {
+//                    self.storageRef.reference(forURL: self.photopath).getData(maxSize: 5*1024*1024, completion: { (data, error) in
+//                        if let error = error {
+//                            print(error.localizedDescription)
+//                        } else {
+//                            let image = UIImage(data: data!)!
+//                            self.saveLocalData(fileName: fileName, imageData: data!)
+//                            self.photo = image
+////                            self.collectionView?.reloadSections([0])
+//                        }
+//                    })
+//                }
+//            }
+            
+        }
+    }
+    
+    func localFileExists(fileName: String) -> Bool {
+        var localFileExists = false
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            localFileExists = fileManager.fileExists(atPath: filePath)
+        }
+        
+        return localFileExists
+    }
+    
+    func loadImageData(fileName: String) -> UIImage? {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        var image: UIImage?
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            let fileData = fileManager.contents(atPath: filePath)
+            image = UIImage(data: fileData!)
+        }
+        
+        return image
+    }
+    
+    func saveLocalData(fileName: String, imageData: Data) {
+        let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+        let url = NSURL(fileURLWithPath: path)
+        if let pathComponent = url.appendingPathComponent(fileName) {
+            let filePath = pathComponent.path
+            let fileManager = FileManager.default
+            fileManager.createFile(atPath: filePath, contents: imageData, attributes: nil)
         }
     }
     

@@ -21,28 +21,29 @@ enum Move: Int {
 
 class PlayViewController: UIViewController {
     
-//    var uid: String?
+    var videoID: String = "tvw6nOEMYL4"
     @IBOutlet weak var videoView: YouTubePlayerView!
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
-//    var ref: DatabaseReference!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        uid = getCurrentUser()
         // Do any additional setup after loading the view.
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        //uid = getCurrentUser()
-        
         
         self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
-        self.videoView.loadVideoID("tvw6nOEMYL4") //cP_x1QoQub8, l7K2XiXzrqo
+        self.videoView.loadVideoID(self.videoID) //cP_x1QoQub8, l7K2XiXzrqo
         
     }
     
-    func getCurrentUser() -> String? {
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        self.videoView.pause()
+    }
+    
+    func getCurrentUserID() -> String? {
         guard let uid = Auth.auth().currentUser?.uid else {
             displayErrorMessage("No user found")
             return nil
@@ -51,51 +52,58 @@ class PlayViewController: UIViewController {
     }
     
     @IBAction func play(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Play" {
-            sender.setTitle("Pause", for: UIControl.State.normal)
-            self.videoView.play()
-        } else {
+        if sender.titleLabel?.text == "Pause" {
             sender.setTitle("Play", for: UIControl.State.normal)
             self.videoView.pause()
+        } else {
+            sender.setTitle("Pause", for: UIControl.State.normal)
+            self.videoView.play()
         }
     }
 
+    // touch down UP button to move forward
     @IBAction func up(_ sender: UIButton) {
         setDirection(.forward)
     }
     
+    // release UP button to stop
     @IBAction func stopUp(_ sender: UIButton) {
-        //after the button is release, set number to 0 to stop toy moving
         setDirection(.stop)
     }
     
+    // touch down DOWN button to move backward
     @IBAction func down(_ sender: Any) {
         setDirection(.backward)
     }
     
+    // release DOWN button to stop
     @IBAction func stopDown(_ sender: Any) {
         setDirection(.stop)
     }
     
+    // touch down RIGHT button to turn right
     @IBAction func right(_ sender: Any) {
         setDirection(.right)
     }
     
+    // release RIGHT button to stop
     @IBAction func stopRight(_ sender: Any) {
         setDirection(.stop)
     }
     
+    // touch down LEFT button to turn left
     @IBAction func left(_ sender: UIButton) {
         setDirection(.left)
     }
     
+    // release LEFT button to stop
     @IBAction func stopLeft(_ sender: UIButton) {
         setDirection(.stop)
     }
     
+    
     func setDirection(_ move: Move) {
-//        self.ref.child("petstation/users/\(uid!)/toy/action").setValue(num)
-        guard let uid = getCurrentUser() else {
+        guard let uid = getCurrentUserID() else {
             return
         }
         

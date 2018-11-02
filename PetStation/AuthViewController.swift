@@ -38,6 +38,20 @@ class AuthViewController: UIViewController {
         Auth.auth().removeStateDidChangeListener(handle!)
     }
     
+    func initialiseFirebaseDatabase() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        Database.database().reference().child("petstation").child("users").observeSingleEvent(of: .value) { (snapshot) in
+            guard let users = snapshot.value as? NSDictionary else {
+                return
+            }
+            
+            //TODO: check if uid exist
+            
+        }
+    }
+    
     func displayErrorMessage(_ errorMessage: String) {
         let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
