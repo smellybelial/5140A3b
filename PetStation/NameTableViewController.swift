@@ -10,6 +10,10 @@ import UIKit
 
 class NameTableViewController: UITableViewController {
 
+    var name: String!
+    var nameDelegate: NameDelegate!
+    @IBOutlet weak var nameTextField: UITextField!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -20,10 +24,13 @@ class NameTableViewController: UITableViewController {
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+        self.tableView.selectRow(at: IndexPath(row: 0, section: 0), animated: true, scrollPosition: .none)
+        self.nameTextField.text = self.name
+        self.nameTextField.becomeFirstResponder()
     }
     
     @objc func done() {
-        
+        self.nameDelegate.updateName(nameTextField.text!)
     }
     
     @objc func cancel() {
@@ -51,6 +58,10 @@ class NameTableViewController: UITableViewController {
         return cell
     }
     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.

@@ -21,6 +21,7 @@
 		026EEB97218D32A600A109C8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB96218D32A600A109C8 /* CameraViewController.swift */; };
 		027AE6A8218D7049002C6BD9 /* NameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */; };
 		027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6A9218D75E9002C6BD9 /* Pet.swift */; };
+		027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */; };
 		02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */; };
 		02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */; };
 		02AA7E43217D4FC2007E5DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AA7E41217D4FC2007E5DEF /* Main.storyboard */; };
@@ -48,6 +49,7 @@
 		026EEB96218D32A600A109C8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTableViewController.swift; sourceTree = "<group>"; };
 		027AE6A9218D75E9002C6BD9 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
+		027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 		02AA7E3A217D4FC2007E5DEF /* PetStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -106,6 +108,7 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
+				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
 				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
 				027AE6A9218D75E9002C6BD9 /* Pet.swift */,
@@ -357,6 +360,7 @@
 				02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */,
 				026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */,
 				027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */,
+				027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */,
 				02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */,
 				026EEB95218D2B0000A109C8 /* WeightTableViewController.swift in Sources */,
 			);

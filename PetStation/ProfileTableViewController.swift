@@ -21,16 +21,12 @@ protocol WeightDelegate {
     func updateWeight(_ weight: Double)
 }
 
-class ProfileTableViewController: UITableViewController, GenderDelegate {
-
+class ProfileTableViewController: UITableViewController, NameDelegate, GenderDelegate, WeightDelegate {
+    
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     let storageRef: Storage = Storage.storage()
     
     var pet: Pet?
-    
-    var name: String = "Anonymous"
-    var weight: Double = 0.0
-    var gender: Gender = .Unknown
     
     var url: String = ""
     var photo: UIImage?
@@ -59,10 +55,6 @@ class ProfileTableViewController: UITableViewController, GenderDelegate {
             }
             
             // get pet name, gender, weight
-            self.name = pet["name"] as! String
-            self.weight = pet["weight"] as! Double
-            self.gender = Gender(hashValue: pet["gender"] as! Int)!
-            
             self.pet?.name = (pet["name"] as! String)
             self.pet?.gender = Gender(hashValue: pet["gender"] as! Int)!
             self.pet?.weight = (pet["weight"] as! Double)
@@ -170,9 +162,10 @@ class ProfileTableViewController: UITableViewController, GenderDelegate {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         var cell = UITableViewCell()
         if indexPath.section == 0 {
-            cell = tableView.dequeueReusableCell(withIdentifier: "ProfilePhotoCell", for: indexPath)
-            cell.textLabel?.text = "Photo"
-            cell.imageView?.image = self.photo
+            let photoCell = tableView.dequeueReusableCell(withIdentifier: "ProfilePhotoCell", for: indexPath) as! PhotoTableViewCell
+            photoCell.textLabel?.text = "Photo"
+            photoCell.photoView.image = self.photo
+            cell = photoCell
         }
 
         // Configure the cell...
@@ -218,10 +211,20 @@ class ProfileTableViewController: UITableViewController, GenderDelegate {
     }
     
     
+    // MARK: - Name Delegate
+    func updateName(_ name: String) {
+        self.pet?.name = name
+    }
+    
     // MARK: - Gender Delegate
     func updateGender(_ gender: Gender) {
-        self.gender = gender
+        self.pet?.gender = gender
         self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+    }
+    
+    // MARK: - Weight Delegate
+    func updateWeight(_ weight: Double) {
+        self.pet?.weight = weight
     }
 
     /*
@@ -266,8 +269,14 @@ class ProfileTableViewController: UITableViewController, GenderDelegate {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "PhotoSegue" {
+            let controller = segue.destination as! CameraViewController
+            controller.image = self.photo
+        }
         if segue.identifier == "NameSegue" {
             let controller = segue.destination as! NameTableViewController
+            controller.nameDelegate = self
+            controller.name = self.pet?.name
         }
         if segue.identifier == "GenderSegue" {
             let controller = segue.destination as! GenderTableViewController
@@ -276,6 +285,8 @@ class ProfileTableViewController: UITableViewController, GenderDelegate {
         }
         if segue.identifier == "WeightSegue" {
             let controller = segue.destination as! WeightTableViewController
+            controller.weightDelegate = self
+            controller.weight = self.pet?.weight
         }
     }
     

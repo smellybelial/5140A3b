@@ -10,8 +10,8 @@ import UIKit
 
 class GenderTableViewController: UITableViewController {
     
-    var gender: Gender?
-    var genderDelegate: GenderDelegate?
+    var gender: Gender!
+    var genderDelegate: GenderDelegate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,14 +22,14 @@ class GenderTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+        self.tableView.reloadData()
         self.tableView.selectRow(at: IndexPath(row: self.gender.hashValue, section: 0), animated: true, scrollPosition: .none)
 
     }
     
     @objc func done() {
         self.gender = Gender(hashValue: (self.tableView.indexPathForSelectedRow?.row)!)
-        // update gender value in firebase
-        genderDelegate?.updateGender(self.gender!)
+        genderDelegate.updateGender(self.gender!)
         self.navigationController?.popViewController(animated: true)
     }
     

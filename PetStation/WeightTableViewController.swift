@@ -8,9 +8,13 @@
 
 import UIKit
 
-class WeightTableViewController: UITableViewController {
+class WeightTableViewController: UITableViewController, UITextFieldDelegate {
 
+    var weight: Double!
     @IBOutlet weak var weightTextField: UITextField!
+    @IBOutlet weak var weightStepper: UIStepper!
+    
+    var weightDelegate: WeightDelegate!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,13 +23,34 @@ class WeightTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+        self.weightStepper.value = self.weight
+        self.weightTextField.text = String(self.weight)
+        self.weightTextField.delegate = self
+    }
+    
+    
+    @IBAction func touchDown(_ sender: UIStepper) {
+        if let text = weightTextField.text {
+            sender.value = Double(text)!
+        }
     }
     
     @IBAction func changeWeight(_ sender: UIStepper) {
-        weightTextField.text = String(sender.value)
+        weightTextField.text = String(format: "%.1f", sender.value)
     }
     
+    @objc func done() {
+        if let weight = self.weightTextField.text {
+            self.weightDelegate.updateWeight(Double(weight)!)
+            self.navigationController?.popViewController(animated: true)
+        }
+    }
+    
+    @objc func cancel() {
+        self.navigationController?.popViewController(animated: true)
+    }
 
     // MARK: - Table view data source
 
@@ -38,6 +63,21 @@ class WeightTableViewController: UITableViewController {
         // #warning Incomplete implementation, return the number of rows
         return 1
     }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if let text = textField.text {
+            self.weightStepper.value = Double(text)!
+        }
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        return textField.resignFirstResponder()
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.weightTextField.endEditing(true)
+    }
 
     /*
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -48,6 +88,10 @@ class WeightTableViewController: UITableViewController {
         return cell
     }
     */
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
 
     /*
     // Override to support conditional editing of the table view.

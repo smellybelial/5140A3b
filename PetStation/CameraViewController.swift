@@ -11,6 +11,7 @@ import Firebase
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
+    var image: UIImage!
     @IBOutlet weak var imageView: UIImageView!
     let databaseRef = Database.database().reference().child("petstation").child("users")
     let storageRef = Storage.storage().reference()
@@ -20,6 +21,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
 
         // Do any additional setup after loading the view.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(self.takePhoto))
+        
+        self.imageView.image = self.image
     }
     
 
