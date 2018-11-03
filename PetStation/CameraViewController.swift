@@ -19,7 +19,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-//        self.navigationItem.rightBarButtonItem = 
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(self.takePhoto))
     }
     
 
@@ -32,8 +32,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         // Pass the selected object to the new view controller.
     }
     */
-
-    @IBAction func takePhoto(_ sender: Any) {
+    
+    @objc func takePhoto() {
         let controller = UIImagePickerController()
         if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
             controller.sourceType = UIImagePickerController.SourceType.camera

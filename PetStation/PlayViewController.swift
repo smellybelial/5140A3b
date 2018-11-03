@@ -29,7 +29,7 @@ class PlayViewController: UIViewController {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
-        self.videoView.loadVideoID(self.videoID) //cP_x1QoQub8, l7K2XiXzrqo
+        self.videoView.loadVideoID(self.videoID)
     }
     
     override func viewWillAppear(_ animated: Bool) {
