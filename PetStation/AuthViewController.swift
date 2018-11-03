@@ -81,8 +81,8 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             let databaseRef = Database.database().reference().child("petstation").child("users").child(uid)
             databaseRef.setValue([
                     "pet": [
-                        "name": "Unknown",
-                        "gender": "Unkown",
+                        "name": "Anonymous",
+                        "gender": Gender.Unknown.hashValue,
                         "weight": 0.0
                     ],
                     "toy": [

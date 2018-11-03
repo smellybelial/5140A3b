@@ -25,13 +25,17 @@ enum Gender: String {
 }
 
 class Pet: NSObject {
-    var name: String = "Anonymous"
-    var gender: Gender = .Unknown
-    var weight: Double = 0.0
+    var name: String
+    var gender: Gender
+    var weight: Double
     
     init(name: String, gender: Gender, weight: Double) {
         self.name = name
         self.gender = gender
         self.weight = weight
+    }
+    
+    convenience override init() {
+        self.init(name: "Anonymous", gender: .Unknown, weight: 0.0)
     }
 }

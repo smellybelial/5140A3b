@@ -9,14 +9,28 @@
 import UIKit
 import Firebase
 
-class ProfileTableViewController: UITableViewController {
-    
+protocol NameDelegate {
+    func updateName(_ name: String)
+}
+
+protocol GenderDelegate {
+    func updateGender(_ gender: Gender)
+}
+
+protocol WeightDelegate {
+    func updateWeight(_ weight: Double)
+}
+
+class ProfileTableViewController: UITableViewController, GenderDelegate {
+
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     let storageRef: Storage = Storage.storage()
     
-    var name: String = ""
+    var pet: Pet?
+    
+    var name: String = "Anonymous"
     var weight: Double = 0.0
-    var gender: String = ""
+    var gender: Gender = .Unknown
     
     var url: String = ""
     var photo: UIImage?
@@ -29,7 +43,7 @@ class ProfileTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
-        
+        self.pet = Pet()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,7 +61,11 @@ class ProfileTableViewController: UITableViewController {
             // get pet name, gender, weight
             self.name = pet["name"] as! String
             self.weight = pet["weight"] as! Double
-            self.gender = pet["gender"] as! String
+            self.gender = Gender(hashValue: pet["gender"] as! Int)!
+            
+            self.pet?.name = (pet["name"] as! String)
+            self.pet?.gender = Gender(hashValue: pet["gender"] as! Int)!
+            self.pet?.weight = (pet["weight"] as! Double)
             
             guard let url = pet["photopath"] as? String else {
                 self.photo = UIImage(named: "pawprints")
@@ -163,13 +181,13 @@ class ProfileTableViewController: UITableViewController {
             switch indexPath.row {
             case 0:
                 cell.textLabel?.text = "Name"
-                cell.detailTextLabel?.text = self.name
+                cell.detailTextLabel?.text = self.pet?.name
             case 1:
                 cell.textLabel?.text = "Gender"
-                cell.detailTextLabel?.text = self.gender
+                cell.detailTextLabel?.text = self.pet?.gender.rawValue
             case 2:
                 cell.textLabel?.text = "Weight"
-                cell.detailTextLabel?.text = String(self.weight)
+                cell.detailTextLabel?.text = String((self.pet?.weight)!)
             default:
                 break
             }
@@ -199,6 +217,12 @@ class ProfileTableViewController: UITableViewController {
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    
+    // MARK: - Gender Delegate
+    func updateGender(_ gender: Gender) {
+        self.gender = gender
+        self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+    }
 
     /*
     // Override to support conditional editing of the table view.
@@ -235,14 +259,25 @@ class ProfileTableViewController: UITableViewController {
     }
     */
 
-    /*
+    
     // MARK: - Navigation
 
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         // Get the new view controller using segue.destination.
         // Pass the selected object to the new view controller.
+        if segue.identifier == "NameSegue" {
+            let controller = segue.destination as! NameTableViewController
+        }
+        if segue.identifier == "GenderSegue" {
+            let controller = segue.destination as! GenderTableViewController
+            controller.genderDelegate = self
+            controller.gender = self.pet?.gender
+        }
+        if segue.identifier == "WeightSegue" {
+            let controller = segue.destination as! WeightTableViewController
+        }
     }
-    */
+    
 
 }

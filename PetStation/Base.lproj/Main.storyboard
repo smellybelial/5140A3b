@@ -116,7 +116,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ct1-Qr-owE">
-                                <rect key="frame" x="150" y="318" width="75" height="30"/>
+                                <rect key="frame" x="150" y="496" width="75" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Edit Profile"/>
                                 <connections>
@@ -191,18 +191,17 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter Pet Name" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ODX-Cj-55W">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Enter Pet Name" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="ODX-Cj-55W">
+                                                    <rect key="frame" x="5" y="12.5" width="365" height="19"/>
                                                     <nil key="textColor"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                 </textField>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="ODX-Cj-55W" secondAttribute="trailing" id="ESt-5N-vOQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="ODX-Cj-55W" secondAttribute="bottom" id="Fzc-9o-Cew"/>
-                                                <constraint firstItem="ODX-Cj-55W" firstAttribute="top" secondItem="0aA-RJ-yqe" secondAttribute="top" id="Otg-6m-jui"/>
-                                                <constraint firstItem="ODX-Cj-55W" firstAttribute="leading" secondItem="0aA-RJ-yqe" secondAttribute="leading" id="QLj-el-GVP"/>
+                                                <constraint firstAttribute="trailing" secondItem="ODX-Cj-55W" secondAttribute="trailing" constant="5" id="ESt-5N-vOQ"/>
+                                                <constraint firstItem="ODX-Cj-55W" firstAttribute="leading" secondItem="0aA-RJ-yqe" secondAttribute="leading" constant="5" id="QLj-el-GVP"/>
+                                                <constraint firstItem="ODX-Cj-55W" firstAttribute="centerY" secondItem="0aA-RJ-yqe" secondAttribute="centerY" id="zs4-hK-jHa"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -266,8 +265,8 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ibb-7Z-081">
-                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="0.0" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ibb-7Z-081">
+                                                    <rect key="frame" x="10" y="13.5" width="261" height="17"/>
                                                     <nil key="textColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
@@ -280,12 +279,11 @@
                                                 </stepper>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="ibb-7Z-081" secondAttribute="trailing" id="6EO-GR-aUJ"/>
-                                                <constraint firstItem="ibb-7Z-081" firstAttribute="leading" secondItem="jFd-sZ-KC0" secondAttribute="leading" id="KM2-Bj-gfP"/>
+                                                <constraint firstItem="ibb-7Z-081" firstAttribute="leading" secondItem="jFd-sZ-KC0" secondAttribute="leading" constant="10" id="KM2-Bj-gfP"/>
                                                 <constraint firstAttribute="trailing" secondItem="5EE-lG-lR7" secondAttribute="trailing" id="OqY-R6-RTQ"/>
-                                                <constraint firstAttribute="bottom" secondItem="ibb-7Z-081" secondAttribute="bottom" id="m5B-dh-hgK"/>
+                                                <constraint firstItem="ibb-7Z-081" firstAttribute="centerY" secondItem="jFd-sZ-KC0" secondAttribute="centerY" id="lB9-69-hRa"/>
                                                 <constraint firstItem="5EE-lG-lR7" firstAttribute="centerY" secondItem="jFd-sZ-KC0" secondAttribute="centerY" id="oKf-eh-2px"/>
-                                                <constraint firstItem="ibb-7Z-081" firstAttribute="top" secondItem="jFd-sZ-KC0" secondAttribute="top" id="y7U-R3-4hY"/>
+                                                <constraint firstItem="5EE-lG-lR7" firstAttribute="leading" secondItem="ibb-7Z-081" secondAttribute="trailing" constant="10" id="sRs-FY-nSg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                     </tableViewCell>
