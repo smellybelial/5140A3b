@@ -15,7 +15,6 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var handle: AuthStateDidChangeListenerHandle?
-//    let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -79,21 +78,20 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             guard let uid = user?.user.uid else {
                 return
             }
-//            self.databaseRef.child(uid).setValue([
-//                    "pet": [
-//                        "name": "Unknown",
-//                        "gender": "Unkown",
-//                        "weight": 0.0,
-//                        "photopath": "https://firebasestorage.googleapis.com/v0/b/test-arduino-5b876.appspot.com/o/PqkSIDNogqQz4dAGAO3pdyn2oY63%2F1541217394?alt=media&token=092ac771-8da9-42d3-b4a1-ab613d7213a3",
-//                        "filepath": ""
-//                    ],
-//                    "toy": [
-//                        "action": 0,
-//                        "cameraSwitch": "OFF",
-//                        "streamVideoID": "tvw6nOEMYL4",
-//                        "videoKey": ""
-//                    ]
-//                ])
+            let databaseRef = Database.database().reference().child("petstation").child("users").child(uid)
+            databaseRef.setValue([
+                    "pet": [
+                        "name": "Unknown",
+                        "gender": "Unkown",
+                        "weight": 0.0
+                    ],
+                    "toy": [
+                        "action": 0,
+                        "cameraSwitch": "OFF",
+                        "streamVideoID": "tvw6nOEMYL4",
+                        "videoKey": ""
+                    ]
+                ])
         }
     }
 
