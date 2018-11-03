@@ -13,10 +13,12 @@ class ProfileTableViewController: UITableViewController {
     
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     let storageRef: Storage = Storage.storage()
+    
     var name: String = ""
     var weight: Float = 0.0
     var gender: String = ""
-    var photopath: String = ""
+    
+    var url: String = ""
     var photo: UIImage?
 
     override func viewDidLoad() {
@@ -27,44 +29,52 @@ class ProfileTableViewController: UITableViewController {
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
         guard let uid = getCurrentUser() else {
             return
         }
         
-        // get pet name, gender, weight
         self.databaseRef.child(uid).child("pet").observeSingleEvent(of: .value) { (snapshot) in
             guard let pet = snapshot.value as? NSDictionary else {
                 return
             }
             
+            // get pet name, gender, weight
             self.name = pet["name"] as? String ?? "Unknown"
             self.weight = pet["weight"] as? Float ?? 0.0
             self.gender = pet["gender"] as? String ?? "Unknown"
-            let url = pet["photopath"] as? String ?? "?"
-//            let fileName = pet["fileName"] as! String
-            self.tableView.reloadData()
             
-//            if self.photopath != url {
-//                self.photopath = url
-//                if self.localFileExists(fileName: fileName) {
-//                    if let image = self.loadImageData(fileName: fileName) {
-//                        self.photo = image
-////                        self.collectionView?.reloadSections([0])
-//                    }
-//                } else {
-//                    self.storageRef.reference(forURL: self.photopath).getData(maxSize: 5*1024*1024, completion: { (data, error) in
-//                        if let error = error {
-//                            print(error.localizedDescription)
-//                        } else {
-//                            let image = UIImage(data: data!)!
-//                            self.saveLocalData(fileName: fileName, imageData: data!)
-//                            self.photo = image
-////                            self.collectionView?.reloadSections([0])
-//                        }
-//                    })
-//                }
-//            }
-            
+            let photopath = pet["photopath"] as! NSDictionary
+            for (name, link) in photopath {
+                let url = link as! String
+                let fileName = name as! String
+                
+                if self.url != url {
+                    self.url = url
+                    if self.localFileExists(fileName: fileName) {
+                        if let image = self.loadImageData(fileName: fileName) {
+                            self.photo = image
+                            self.tableView.reloadData()
+                        }
+                    } else {
+                        self.storageRef.reference(forURL: url).getData(maxSize: 5*1024*1024, completion: { (data, error) in
+                            if let error = error {
+                                print(error.localizedDescription)
+                            } else {
+                                let image = UIImage(data: data!)!
+                                self.saveLocalData(fileName: fileName, imageData: data!)
+                                self.photo = image
+                                self.tableView.reloadData()
+                            }
+                        })
+                    }
+                }
+            }
         }
     }
     
@@ -123,34 +133,46 @@ class ProfileTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 4
+        switch section {
+        case 0:
+            return 1
+        case 1:
+            return 3
+        default:
+            return 0
+        }
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ProfileCell", for: indexPath)
+        var cell = UITableViewCell()
+        if indexPath.section == 0 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ProfilePhotoCell", for: indexPath)
+            cell.textLabel?.text = "Photo"
+            cell.imageView?.image = self.photo
+        }
 
         // Configure the cell...
-        switch indexPath.row {
-        case 0:
-            cell.textLabel?.text = "Photo"
-            cell.detailTextLabel?.text = self.photopath
-        case 1:
-            cell.textLabel?.text = "Name"
-            cell.detailTextLabel?.text = self.name
-        case 2:
-            cell.textLabel?.text = "Gender"
-            cell.detailTextLabel?.text = self.gender
-        case 3:
-            cell.textLabel?.text = "Weight"
-            cell.detailTextLabel?.text = String(self.weight)
-        default:
-            break
+        if indexPath.section == 1 {
+            cell = tableView.dequeueReusableCell(withIdentifier: "ProfileAttributeCell", for: indexPath)
+            switch indexPath.row {
+            case 0:
+                cell.textLabel?.text = "Name"
+                cell.detailTextLabel?.text = self.name
+            case 1:
+                cell.textLabel?.text = "Gender"
+                cell.detailTextLabel?.text = self.gender
+            case 2:
+                cell.textLabel?.text = "Weight"
+                cell.detailTextLabel?.text = String(self.weight)
+            default:
+                break
+            }
         }
 
         return cell

@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class AuthViewController: UIViewController {
+class AuthViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -19,6 +19,8 @@ class AuthViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        emailTextField.delegate = self
+        passwordTextField.delegate = self
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -38,6 +40,20 @@ class AuthViewController: UIViewController {
         Auth.auth().removeStateDidChangeListener(handle!)
     }
     
+    // MARK: - TextField Delegate
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.resignFirstResponder()
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
+    
     func initialiseFirebaseDatabase() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
@@ -48,6 +64,12 @@ class AuthViewController: UIViewController {
             }
             
             //TODO: check if uid exist
+            for (user, _) in users {
+                let userID = user as? String
+                if uid == userID {
+                    return
+                }
+            }
             
         }
     }
