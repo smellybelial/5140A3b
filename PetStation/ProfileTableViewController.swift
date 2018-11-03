@@ -179,18 +179,23 @@ class ProfileTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        switch indexPath.row {
-        case 0:
+        if indexPath.section == 0 {
             self.performSegue(withIdentifier: "PhotoSegue", sender: nil)
-        case 1:
-            self.performSegue(withIdentifier: "NameSegue", sender: nil)
-        case 2:
-            self.performSegue(withIdentifier: "GenderSegue", sender: nil)
-        case 3:
-            self.performSegue(withIdentifier: "WeightSegue", sender: nil)
-        default:
-            break
         }
+        
+        if indexPath.section == 1 {
+            switch indexPath.row {
+            case 0:
+                self.performSegue(withIdentifier: "NameSegue", sender: nil)
+            case 1:
+                self.performSegue(withIdentifier: "GenderSegue", sender: nil)
+            case 2:
+                self.performSegue(withIdentifier: "WeightSegue", sender: nil)
+            default:
+                break
+            }
+        }
+        
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
