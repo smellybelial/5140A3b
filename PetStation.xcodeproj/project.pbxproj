@@ -17,6 +17,8 @@
 		024450272180AA6E00A1CEE3 /* YouTubePlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024450262180AA6E00A1CEE3 /* YouTubePlayer.framework */; };
 		026EEB91218C305100A109C8 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB90218C305100A109C8 /* ProfileTableViewController.swift */; };
 		026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */; };
+		026EEB95218D2B0000A109C8 /* WeightTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */; };
+		026EEB97218D32A600A109C8 /* CameraViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB96218D32A600A109C8 /* CameraViewController.swift */; };
 		02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */; };
 		02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */; };
 		02AA7E43217D4FC2007E5DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AA7E41217D4FC2007E5DEF /* Main.storyboard */; };
@@ -40,6 +42,8 @@
 		024450262180AA6E00A1CEE3 /* YouTubePlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YouTubePlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		026EEB90218C305100A109C8 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderTableViewController.swift; sourceTree = "<group>"; };
+		026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTableViewController.swift; sourceTree = "<group>"; };
+		026EEB96218D32A600A109C8 /* CameraViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraViewController.swift; sourceTree = "<group>"; };
 		02AA7E3A217D4FC2007E5DEF /* PetStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -99,6 +103,8 @@
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
+				026EEB96218D32A600A109C8 /* CameraViewController.swift */,
+				026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */,
 				026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */,
 				026EEB90218C305100A109C8 /* ProfileTableViewController.swift */,
 				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
@@ -336,6 +342,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				026EEB91218C305100A109C8 /* ProfileTableViewController.swift in Sources */,
+				026EEB97218D32A600A109C8 /* CameraViewController.swift in Sources */,
 				0244502321808F2200A1CEE3 /* PlayViewController.swift in Sources */,
 				46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */,
 				02AA7E46217D4FC2007E5DEF /* PetStation.xcdatamodeld in Sources */,
@@ -343,6 +350,7 @@
 				02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */,
 				026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */,
 				02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */,
+				026EEB95218D2B0000A109C8 /* WeightTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

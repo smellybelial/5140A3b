@@ -116,9 +116,9 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ct1-Qr-owE">
-                                <rect key="frame" x="164" y="318" width="46" height="30"/>
+                                <rect key="frame" x="150" y="318" width="75" height="30"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Edit Profile"/>
                                 <connections>
                                     <segue destination="aMV-nh-GNK" kind="show" identifier="ProfileSegue" id="2UF-GT-pUK"/>
                                 </connections>
@@ -137,7 +137,7 @@
         <!--Photo-->
         <scene sceneID="C1U-6U-gEF">
             <objects>
-                <viewController title="Photo" id="ulf-bh-VcP" sceneMemberID="viewController">
+                <viewController title="Photo" id="ulf-bh-VcP" customClass="CameraViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aLz-n7-WvJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -160,7 +160,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94h-UA-6K2" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5186" y="-1191"/>
+            <point key="canvasLocation" x="5205.6000000000004" y="-1372.263868065967"/>
         </scene>
         <!--Name-->
         <scene sceneID="Rgy-OE-sNQ">
@@ -206,7 +206,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qBw-QW-bTq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5185" y="-510"/>
+            <point key="canvasLocation" x="5206" y="-573"/>
         </scene>
         <!--Gender-->
         <scene sceneID="vke-OT-wmF">
@@ -235,49 +235,64 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="prg-wd-Y6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4374" y="256"/>
+            <point key="canvasLocation" x="5206" y="165"/>
         </scene>
         <!--Weight-->
         <scene sceneID="SOr-UF-J0D">
             <objects>
-                <tableViewController title="Weight" id="RSJ-GB-MGp" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="BSf-qL-9fS">
+                <tableViewController title="Weight" id="RSJ-GB-MGp" customClass="WeightTableViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="BSf-qL-9fS">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="bx1-js-IqS">
-                                <rect key="frame" x="0.0" y="55.5" width="375" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bx1-js-IqS" id="jFd-sZ-KC0">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                    <subviews>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ibb-7Z-081">
+                        <sections>
+                            <tableViewSection id="3z7-BU-r1v">
+                                <cells>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="WeightCell" id="bx1-js-IqS">
+                                        <rect key="frame" x="0.0" y="35" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bx1-js-IqS" id="jFd-sZ-KC0">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="trailing" secondItem="ibb-7Z-081" secondAttribute="trailing" id="6EO-GR-aUJ"/>
-                                        <constraint firstItem="ibb-7Z-081" firstAttribute="leading" secondItem="jFd-sZ-KC0" secondAttribute="leading" id="KM2-Bj-gfP"/>
-                                        <constraint firstAttribute="bottom" secondItem="ibb-7Z-081" secondAttribute="bottom" id="m5B-dh-hgK"/>
-                                        <constraint firstItem="ibb-7Z-081" firstAttribute="top" secondItem="jFd-sZ-KC0" secondAttribute="top" id="y7U-R3-4hY"/>
-                                    </constraints>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="0.0" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ibb-7Z-081">
+                                                    <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                                <stepper opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" wraps="YES" maximumValue="100" stepValue="0.10000000000000001" translatesAutoresizingMaskIntoConstraints="NO" id="5EE-lG-lR7">
+                                                    <rect key="frame" x="281" y="7.5" width="94" height="29"/>
+                                                    <connections>
+                                                        <action selector="changeWeight:" destination="RSJ-GB-MGp" eventType="valueChanged" id="s0T-Gq-Vzr"/>
+                                                    </connections>
+                                                </stepper>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="trailing" secondItem="ibb-7Z-081" secondAttribute="trailing" id="6EO-GR-aUJ"/>
+                                                <constraint firstItem="ibb-7Z-081" firstAttribute="leading" secondItem="jFd-sZ-KC0" secondAttribute="leading" id="KM2-Bj-gfP"/>
+                                                <constraint firstAttribute="trailing" secondItem="5EE-lG-lR7" secondAttribute="trailing" id="OqY-R6-RTQ"/>
+                                                <constraint firstAttribute="bottom" secondItem="ibb-7Z-081" secondAttribute="bottom" id="m5B-dh-hgK"/>
+                                                <constraint firstItem="5EE-lG-lR7" firstAttribute="centerY" secondItem="jFd-sZ-KC0" secondAttribute="centerY" id="oKf-eh-2px"/>
+                                                <constraint firstItem="ibb-7Z-081" firstAttribute="top" secondItem="jFd-sZ-KC0" secondAttribute="top" id="y7U-R3-4hY"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </cells>
+                            </tableViewSection>
+                        </sections>
                         <connections>
                             <outlet property="dataSource" destination="RSJ-GB-MGp" id="6C7-tr-DHy"/>
                             <outlet property="delegate" destination="RSJ-GB-MGp" id="JcC-gL-VQl"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <outlet property="weightTextField" destination="ibb-7Z-081" id="RnD-KU-maZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="lHz-5b-M13" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5185" y="256"/>
+            <point key="canvasLocation" x="5206" y="851"/>
         </scene>
         <!--Profile Table View Controller-->
         <scene sceneID="Wq3-Fb-uCh">
@@ -384,7 +399,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9K-Qb-1Uz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3223" y="1538"/>
+            <point key="canvasLocation" x="3681" y="1592"/>
         </scene>
         <!--Feeder-->
         <scene sceneID="sLz-gR-jaF">
