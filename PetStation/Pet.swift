@@ -8,8 +8,20 @@
 
 import UIKit
 
-enum Gender {
+enum Gender: String {
     case Male, Female, Other, Unknown
+    init?(hashValue: Int) {
+        switch hashValue {
+        case 0:
+            self.init(rawValue: "Male")
+        case 1:
+            self.init(rawValue: "Female")
+        case 2:
+            self.init(rawValue: "Other")
+        default:
+            self.init(rawValue: "Unknown")
+        }
+    }
 }
 
 class Pet: NSObject {

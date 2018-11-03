@@ -10,7 +10,7 @@ import UIKit
 
 class GenderTableViewController: UITableViewController {
     
-    let genders = ["Male", "Female", "Other"]
+    let genders: [Gender] = [.Male, .Female, .Other]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,7 +19,17 @@ class GenderTableViewController: UITableViewController {
         // self.clearsSelectionOnViewWillAppear = false
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
+
+    }
+    
+    @objc func done() {
+        self.tableView.cellForRow(at: self.tableView.indexPathForSelectedRow!)
+    }
+    
+    @objc func cancel() {
+        self.navigationController?.popViewController(animated: true)
     }
 
     // MARK: - Table view data source
@@ -47,7 +57,7 @@ class GenderTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenderCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = self.genders[indexPath.row]
+        cell.textLabel?.text = self.genders[indexPath.row].rawValue
 
         return cell
     }
