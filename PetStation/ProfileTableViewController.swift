@@ -52,11 +52,10 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
             
             // get pet name, gender, weight
             self.pet?.name = (pet["name"] as! String)
-            self.pet?.gender = Gender(hashValue: pet["gender"] as! Int)!
+            self.pet?.gender = Gender(rawValue: pet["gender"] as! Int)!
             self.pet?.weight = (pet["weight"] as! Double)
             
             guard let url = pet["photopath"] as? String else {
-                self.photo = UIImage(named: "pawprints")
                 self.tableView.reloadData()
                 return
             }
@@ -160,7 +159,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         if indexPath.section == 0 {
             let photoCell = tableView.dequeueReusableCell(withIdentifier: "ProfilePhotoCell", for: indexPath) as! PhotoTableViewCell
             photoCell.textLabel?.text = "Photo"
-            photoCell.photoView.image = self.photo
+            photoCell.photoView.image = self.photo ?? UIImage(named: "pawprints")
             cell = photoCell
         }
 
@@ -173,7 +172,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
                 cell.detailTextLabel?.text = self.pet?.name
             case 1:
                 cell.textLabel?.text = "Gender"
-                cell.detailTextLabel?.text = self.pet?.gender.rawValue
+                cell.detailTextLabel?.text = "\((self.pet?.gender)!)"
             case 2:
                 cell.textLabel?.text = "Weight"
                 cell.detailTextLabel?.text = String((self.pet?.weight)!)

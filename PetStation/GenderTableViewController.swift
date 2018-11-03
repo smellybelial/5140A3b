@@ -23,9 +23,7 @@ class GenderTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
 //        self.tableView.reloadData()
-        let indexPath = IndexPath(row: self.gender.hashValue, section: 0)
-        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+
 //        self.tableView.reloadData()
 
 
@@ -53,20 +51,23 @@ class GenderTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.visibleCells.forEach { (cell) in
+            cell.accessoryType = .none
+        }
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
-        self.gender = Gender(hashValue: indexPath.row)
+        self.gender = Gender(rawValue: indexPath.row)
+        tableView.deselectRow(at: indexPath, animated: true)
     }
-    
-    override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        tableView.cellForRow(at: indexPath)?.accessoryType = .none
-    }
-
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "GenderCell", for: indexPath)
 
         // Configure the cell...
-        cell.textLabel?.text = Gender(hashValue: indexPath.row)!.rawValue
+        cell.textLabel?.text = "\(Gender(rawValue: indexPath.row)!)"
+        
+        if indexPath.row == self.gender.rawValue {
+            cell.accessoryType = .checkmark
+        }
 
         return cell
     }

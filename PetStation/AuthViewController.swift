@@ -82,7 +82,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             databaseRef.setValue([
                     "pet": [
                         "name": "Anonymous",
-                        "gender": Gender.Unknown.hashValue,
+                        "gender": Gender.Unknown.rawValue,
                         "weight": 0.0
                     ],
                     "toy": [
