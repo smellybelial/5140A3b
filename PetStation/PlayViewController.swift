@@ -12,11 +12,11 @@ import YouTubePlayer_Swift
 import Firebase
 
 enum Move: Int {
-    case stop
-    case forward
-    case backward
-    case right
-    case left
+    case stop, forward, backward, right, left
+}
+
+enum CameraSwitch: String {
+    case ON, OFF
 }
 
 class PlayViewController: UIViewController {
@@ -27,17 +27,41 @@ class PlayViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         // Do any additional setup after loading the view.
         self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
-        self.videoView.loadVideoID(self.videoID)
+//        self.videoView.loadVideoID(self.videoID)
+        self.loadVideo()
+        setCameraSwitch(.ON)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        setCameraSwitch(.ON)
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
+        
+        setCameraSwitch(.OFF)
+    }
+    
+    func loadVideo() {
+        guard let uid = getCurrentUserID() else {
+            return
+        }
+        
+        self.databaseRef.child(uid).child("toy/streamVideoID").observe(.value) { (snapshot) in
+            guard let value = snapshot.value as? String else {
+                return
+            }
+            
+            self.videoID = value
+            self.videoView.loadVideoID(self.videoID)
+
+        }
     }
     
     func getCurrentUserID() -> String? {
@@ -98,7 +122,6 @@ class PlayViewController: UIViewController {
         setDirection(.stop)
     }
     
-    
     func setDirection(_ move: Move) {
         guard let uid = getCurrentUserID() else {
             return
@@ -111,6 +134,14 @@ class PlayViewController: UIViewController {
         //3 = move right
         //4 = move left
         self.databaseRef.child(uid).child("toy/action").setValue(move.rawValue)
+    }
+    
+    func setCameraSwitch(_ cameraSwitch: CameraSwitch) {
+        guard let uid = getCurrentUserID() else {
+            return
+        }
+        
+        self.databaseRef.child(uid).child("toy/cameraSwitch").setValue(cameraSwitch.rawValue)
     }
     
     /*

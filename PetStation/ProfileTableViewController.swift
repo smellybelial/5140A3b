@@ -210,18 +210,33 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
     func updateName(_ name: String) {
         self.pet?.name = name
         self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
+        
+        self.setDatabaseValue(for: "name", value: name)
     }
     
     // MARK: - Gender Delegate
     func updateGender(_ gender: Gender) {
         self.pet?.gender = gender
         self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
+        
+        self.setDatabaseValue(for: "gender", value: gender.rawValue)
     }
     
     // MARK: - Weight Delegate
     func updateWeight(_ weight: Double) {
         self.pet?.weight = weight
         self.tableView.reloadRows(at: [IndexPath(row: 2, section: 1)], with: .automatic)
+        
+        self.setDatabaseValue(for: "weight", value: weight)
+    }
+    
+    // update the value for uid/pet/key on firebase
+    func setDatabaseValue(for key: String, value: Any?) {
+        guard let uid = getCurrentUser() else {
+            return
+        }
+        
+        self.databaseRef.child(uid).child("pet").child(key).setValue(value)
     }
 
     /*
