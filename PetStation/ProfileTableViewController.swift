@@ -15,7 +15,7 @@ class ProfileTableViewController: UITableViewController {
     let storageRef: Storage = Storage.storage()
     
     var name: String = ""
-    var weight: Float = 0.0
+    var weight: Double = 0.0
     var gender: String = ""
     
     var url: String = ""
@@ -45,35 +45,35 @@ class ProfileTableViewController: UITableViewController {
             }
             
             // get pet name, gender, weight
-            self.name = pet["name"] as? String ?? "Unknown"
-            self.weight = pet["weight"] as? Float ?? 0.0
-            self.gender = pet["gender"] as? String ?? "Unknown"
+            self.name = pet["name"] as! String
+            self.weight = pet["weight"] as! Double
+            self.gender = pet["gender"] as! String
             
-            let photopath = pet["photopath"] as! NSDictionary
-            for (name, link) in photopath {
-                let url = link as! String
-                let fileName = name as! String
-                
-                if self.url != url {
-                    self.url = url
-                    if self.localFileExists(fileName: fileName) {
-                        if let image = self.loadImageData(fileName: fileName) {
-                            self.photo = image
-                            self.tableView.reloadData()
-                        }
-                    } else {
-                        self.storageRef.reference(forURL: url).getData(maxSize: 5*1024*1024, completion: { (data, error) in
-                            if let error = error {
-                                print(error.localizedDescription)
-                            } else {
-                                let image = UIImage(data: data!)!
-                                self.saveLocalData(fileName: fileName, imageData: data!)
-                                self.photo = image
-                                self.tableView.reloadData()
-                            }
-                        })
-                    }
+            guard let url = pet["photopath"] as? String else {
+                self.photo = UIImage(named: "pawprints")
+                self.tableView.reloadData()
+                return
+            }
+            
+            self.url = url
+            let fileName = pet["filepath"] as? String ?? ""
+            
+            if fileName != "", self.localFileExists(fileName: fileName) {
+                if let image = self.loadImageData(fileName: fileName) {
+                    self.photo = image
+                    self.tableView.reloadData()
                 }
+            } else {
+                self.storageRef.reference(forURL: self.url).getData(maxSize: 5*1024*1024, completion: { (data, error) in
+                    if let error = error {
+                        print(error.localizedDescription)
+                    } else {
+                        let image = UIImage(data: data!)!
+                        self.saveLocalData(fileName: fileName, imageData: data!)
+                        self.photo = image
+                        self.tableView.reloadData()
+                    }
+                })
             }
         }
     }

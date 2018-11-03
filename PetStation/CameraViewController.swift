@@ -75,7 +75,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                     guard let downloadURL = url?.absoluteString else {
                         return
                     }
-                    self.databaseRef.child(userID).child("pet/photopath").setValue(["\(date)" : downloadURL])
+                    self.databaseRef.child(userID).child("pet/photopath").setValue(downloadURL)
+                    self.databaseRef.child(userID).child("pet/filepath").setValue("\(date)")
                     self.displayMessage("Image saved to Firebase", "Success")
                 })
             }

@@ -15,6 +15,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var passwordTextField: UITextField!
     
     var handle: AuthStateDidChangeListenerHandle?
+//    let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,26 +55,6 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.view.endEditing(true)
     }
     
-    func initialiseFirebaseDatabase() {
-        guard let uid = Auth.auth().currentUser?.uid else {
-            return
-        }
-        Database.database().reference().child("petstation").child("users").observeSingleEvent(of: .value) { (snapshot) in
-            guard let users = snapshot.value as? NSDictionary else {
-                return
-            }
-            
-            //TODO: check if uid exist
-            for (user, _) in users {
-                let userID = user as? String
-                if uid == userID {
-                    return
-                }
-            }
-            
-        }
-    }
-    
     func displayErrorMessage(_ errorMessage: String) {
         let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -93,7 +74,26 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if error != nil {
                 self.displayErrorMessage(error!.localizedDescription)
+                return
             }
+            guard let uid = user?.user.uid else {
+                return
+            }
+//            self.databaseRef.child(uid).setValue([
+//                    "pet": [
+//                        "name": "Unknown",
+//                        "gender": "Unkown",
+//                        "weight": 0.0,
+//                        "photopath": "https://firebasestorage.googleapis.com/v0/b/test-arduino-5b876.appspot.com/o/PqkSIDNogqQz4dAGAO3pdyn2oY63%2F1541217394?alt=media&token=092ac771-8da9-42d3-b4a1-ab613d7213a3",
+//                        "filepath": ""
+//                    ],
+//                    "toy": [
+//                        "action": 0,
+//                        "cameraSwitch": "OFF",
+//                        "streamVideoID": "tvw6nOEMYL4",
+//                        "videoKey": ""
+//                    ]
+//                ])
         }
     }
 
