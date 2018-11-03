@@ -9,6 +9,8 @@
 import UIKit
 
 class GenderTableViewController: UITableViewController {
+    
+    let genders = ["Male", "Female", "Other"]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,15 +42,16 @@ class GenderTableViewController: UITableViewController {
         tableView.cellForRow(at: indexPath)?.accessoryType = .none
     }
 
-    /*
+    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "reuseIdentifier", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "GenderCell", for: indexPath)
 
         // Configure the cell...
+        cell.textLabel?.text = self.genders[indexPath.row]
 
         return cell
     }
-    */
+    
 
     /*
     // Override to support conditional editing of the table view.
