@@ -30,7 +30,10 @@ class NameTableViewController: UITableViewController {
     }
     
     @objc func done() {
-        self.nameDelegate.updateName(nameTextField.text!)
+        if let name = nameTextField.text {
+            self.nameDelegate.updateName(name)
+            self.navigationController?.popViewController(animated: true)
+        }
     }
     
     @objc func cancel() {

@@ -40,10 +40,6 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
         self.pet = Pet()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
         
         guard let uid = getCurrentUser() else {
             return
@@ -214,6 +210,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
     // MARK: - Name Delegate
     func updateName(_ name: String) {
         self.pet?.name = name
+        self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
     }
     
     // MARK: - Gender Delegate
@@ -225,6 +222,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
     // MARK: - Weight Delegate
     func updateWeight(_ weight: Double) {
         self.pet?.weight = weight
+        self.tableView.reloadRows(at: [IndexPath(row: 2, section: 1)], with: .automatic)
     }
 
     /*

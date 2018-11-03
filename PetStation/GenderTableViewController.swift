@@ -22,13 +22,16 @@ class GenderTableViewController: UITableViewController {
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
-        self.tableView.reloadData()
-        self.tableView.selectRow(at: IndexPath(row: self.gender.hashValue, section: 0), animated: true, scrollPosition: .none)
+//        self.tableView.reloadData()
+        let indexPath = IndexPath(row: self.gender.hashValue, section: 0)
+        self.tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+        self.tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+//        self.tableView.reloadData()
+
 
     }
     
     @objc func done() {
-        self.gender = Gender(hashValue: (self.tableView.indexPathForSelectedRow?.row)!)
         genderDelegate.updateGender(self.gender!)
         self.navigationController?.popViewController(animated: true)
     }
@@ -51,6 +54,7 @@ class GenderTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.cellForRow(at: indexPath)?.accessoryType = .checkmark
+        self.gender = Gender(hashValue: indexPath.row)
     }
     
     override func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
