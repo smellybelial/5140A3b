@@ -9,6 +9,10 @@
 import UIKit
 import Firebase
 
+protocol PhotoDelegate {
+    func updatePhoto(_ fileName: String)
+}
+
 protocol NameDelegate {
     func updateName(_ name: String)
 }
@@ -21,7 +25,7 @@ protocol WeightDelegate {
     func updateWeight(_ weight: Double)
 }
 
-class ProfileTableViewController: UITableViewController, NameDelegate, GenderDelegate, WeightDelegate {
+class ProfileTableViewController: UITableViewController, NameDelegate, GenderDelegate, WeightDelegate, PhotoDelegate {
     
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
     let storageRef: Storage = Storage.storage()
@@ -205,38 +209,47 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         tableView.deselectRow(at: indexPath, animated: true)
     }
     
+    // MARK: - Delegates
     
-    // MARK: - Name Delegate
+    // Photo Delegate
+    func updatePhoto(_ fileName: String) {
+        if let image = self.loadImageData(fileName: fileName) {
+            self.photo = image
+            self.tableView.reloadRows(at: [IndexPath(row: 0, section: 0)], with: .automatic)
+        }
+    }
+    
+    // Name Delegate
     func updateName(_ name: String) {
         self.pet?.name = name
         self.tableView.reloadRows(at: [IndexPath(row: 0, section: 1)], with: .automatic)
         
-        self.setDatabaseValue(for: "name", value: name)
+        self.setDatabaseValue(name, forKey: "name")
     }
     
-    // MARK: - Gender Delegate
+    // Gender Delegate
     func updateGender(_ gender: Gender) {
         self.pet?.gender = gender
         self.tableView.reloadRows(at: [IndexPath(row: 1, section: 1)], with: .automatic)
         
-        self.setDatabaseValue(for: "gender", value: gender.rawValue)
+        self.setDatabaseValue(gender.rawValue, forKey: "gender")
     }
     
-    // MARK: - Weight Delegate
+    // Weight Delegate
     func updateWeight(_ weight: Double) {
         self.pet?.weight = weight
         self.tableView.reloadRows(at: [IndexPath(row: 2, section: 1)], with: .automatic)
         
-        self.setDatabaseValue(for: "weight", value: weight)
+        self.setDatabaseValue(weight, forKey: "weight")
     }
     
     // update the value for uid/pet/key on firebase
-    func setDatabaseValue(for key: String, value: Any?) {
+    func setDatabaseValue(_ value: Any?, forKey: String) {
         guard let uid = getCurrentUser() else {
             return
         }
         
-        self.databaseRef.child(uid).child("pet").child(key).setValue(value)
+        self.databaseRef.child(uid).child("pet").child(forKey).setValue(value)
     }
 
     /*
