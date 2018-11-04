@@ -118,11 +118,11 @@
 				026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */,
 				026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */,
 				0244502221808F2200A1CEE3 /* PlayViewController.swift */,
+				46E661D0218A6F6700B173FB /* FeederViewController.swift */,
 				02AA7E47217D4FC4007E5DEF /* Assets.xcassets */,
 				02AA7E49217D4FC4007E5DEF /* LaunchScreen.storyboard */,
 				02AA7E4C217D4FC4007E5DEF /* Info.plist */,
 				02AA7E44217D4FC2007E5DEF /* PetStation.xcdatamodeld */,
-				46E661D0218A6F6700B173FB /* FeederViewController.swift */,
 				466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */,
 			);
 			path = PetStation;

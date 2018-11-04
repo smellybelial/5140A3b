@@ -9,12 +9,15 @@
 import UIKit
 import Firebase
 
+enum Cup: Int {
+    case Quarter = 3 // 12/4
+    case Third = 4 // 12/3
+    case Half = 6 // 12/2
+    case Sixth = 2  // 12/6
+}
+
 class FeederViewController: UIViewController {
-    var foodAmount: Int?
-    var manual: String?
-    let databaseRef : DatabaseReference = Database.database().reference().child("users")
-    var uid: String?
-    var ref: DatabaseReference!
+    let databaseRef: DatabaseReference = Database.database().reference().child("petstation").child("users")
 
     @IBOutlet weak var idLabel: UILabel!
     @IBOutlet weak var amountSegment: UISegmentedControl!
@@ -24,10 +27,8 @@ class FeederViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        idLabel.text = getCurrentUser()
+        idLabel.text = Auth.auth().currentUser?.email
         // Do any additional setup after loading the view.
-        ref = Database.database().reference()
-        uid = getCurrentUser()
         
     }
     
@@ -42,28 +43,32 @@ class FeederViewController: UIViewController {
         
     }
     
-    func setFeed() {
-        //self.ref.child("petstation/users/\(uid!)/feeder/amount").setValue(foodAmount!)
-        self.ref.child("petstation/users/\(uid!)/feeder/manual").setValue(foodAmount)
-        
+    func setFeed(cup: Cup) {
+        guard let uid = getCurrentUser() else {
+            return
+        }
+        let manual = self.databaseRef.child("\(uid)/feeder/manual")
+        manual.setValue(cup.rawValue)
     }
     
     @IBAction func feedButton(button: UIButton) {
+        var foodAmount = Cup.Sixth
+        
         switch (amountSegment.selectedSegmentIndex) {
         case 0 :
-            foodAmount = 3 //3/12 //should rotate 3 times, each 90 degrees.
+            foodAmount = Cup.Quarter //3/12 //should rotate 3 times, each 90 degrees.
             break
         case 1 :
-            foodAmount = 4 //4/12
+            foodAmount = Cup.Third //4/12
             break
         case 2 :
-            foodAmount = 6 //6/12
+            foodAmount = Cup.Half //6/12
             break
         default:
-            foodAmount = 2 //2/12 //rotate 2 times, each 90degrees.
+            foodAmount = Cup.Sixth //2/12 //rotate 2 times, each 90degrees.
             break
         }
-        setFeed()
+        setFeed(cup: foodAmount)
         
     }
     
