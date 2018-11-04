@@ -22,6 +22,8 @@
 		027AE6A8218D7049002C6BD9 /* NameTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */; };
 		027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6A9218D75E9002C6BD9 /* Pet.swift */; };
 		027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */; };
+		027AE6AE218E7D4E002C6BD9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */; };
+		027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */; };
 		02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */; };
 		02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */; };
 		02AA7E43217D4FC2007E5DEF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AA7E41217D4FC2007E5DEF /* Main.storyboard */; };
@@ -50,6 +52,8 @@
 		027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NameTableViewController.swift; sourceTree = "<group>"; };
 		027AE6A9218D75E9002C6BD9 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
+		027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		02AA7E3A217D4FC2007E5DEF /* PetStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthViewController.swift; sourceTree = "<group>"; };
@@ -108,9 +112,11 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
+				027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */,
 				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
 				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
+				027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */,
 				027AE6A9218D75E9002C6BD9 /* Pet.swift */,
 				026EEB90218C305100A109C8 /* ProfileTableViewController.swift */,
 				026EEB96218D32A600A109C8 /* CameraViewController.swift */,
@@ -355,8 +361,10 @@
 				026EEB97218D32A600A109C8 /* CameraViewController.swift in Sources */,
 				0244502321808F2200A1CEE3 /* PlayViewController.swift in Sources */,
 				46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */,
+				027AE6AE218E7D4E002C6BD9 /* HomeViewController.swift in Sources */,
 				02AA7E46217D4FC2007E5DEF /* PetStation.xcdatamodeld in Sources */,
 				02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */,
+				027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */,
 				02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */,
 				026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */,
 				027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */,

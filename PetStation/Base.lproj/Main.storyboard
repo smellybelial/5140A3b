@@ -118,26 +118,17 @@
                                     <constraint firstAttribute="width" secondItem="cNS-AV-Iug" secondAttribute="height" multiplier="1:1" id="yj5-cO-owT"/>
                                 </constraints>
                             </imageView>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hXg-mz-sxS">
-                                <rect key="frame" x="148.5" y="568" width="78" height="30"/>
-                                <state key="normal" title="Save Photo"/>
-                                <connections>
-                                    <action selector="savePhoto:" destination="ulf-bh-VcP" eventType="touchUpInside" id="B3S-cq-oOC"/>
-                                </connections>
-                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="cNS-AV-Iug" firstAttribute="leading" secondItem="HNU-0g-fIC" secondAttribute="leading" constant="8" id="6lR-ZB-RGb"/>
-                            <constraint firstItem="HNU-0g-fIC" firstAttribute="bottom" secondItem="hXg-mz-sxS" secondAttribute="bottom" constant="20" id="DuD-kF-TsM"/>
                             <constraint firstItem="cNS-AV-Iug" firstAttribute="top" secondItem="HNU-0g-fIC" secondAttribute="top" constant="8" id="Sws-q4-ZTk"/>
                             <constraint firstItem="HNU-0g-fIC" firstAttribute="trailing" secondItem="cNS-AV-Iug" secondAttribute="trailing" constant="8" id="Utw-Es-ci3"/>
-                            <constraint firstItem="hXg-mz-sxS" firstAttribute="centerX" secondItem="aLz-n7-WvJ" secondAttribute="centerX" id="yLr-9n-Tt3"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="HNU-0g-fIC"/>
                     </view>
                     <connections>
-                        <outlet property="imageView" destination="cNS-AV-Iug" id="UKx-UP-di6"/>
+                        <outlet property="photoView" destination="cNS-AV-Iug" id="UKx-UP-di6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94h-UA-6K2" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -357,10 +348,10 @@
             </objects>
             <point key="canvasLocation" x="3680.8000000000002" y="-573.46326836581716"/>
         </scene>
-        <!--View Controller-->
+        <!--Settings-->
         <scene sceneID="cZi-Pq-BVW">
             <objects>
-                <viewController id="e3Q-hJ-rHC" sceneMemberID="viewController">
+                <viewController title="Settings" id="e3Q-hJ-rHC" customClass="SettingsViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="h4H-rs-I8Q">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -589,7 +580,7 @@
         <!--Home-->
         <scene sceneID="iGo-rM-Ujw">
             <objects>
-                <viewController title="Home" id="hPw-4i-23z" sceneMemberID="viewController">
+                <viewController title="Home" id="hPw-4i-23z" customClass="HomeViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="5n5-gd-ji5">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>

@@ -11,8 +11,10 @@ import Firebase
 
 class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
-    var image: UIImage!
-    @IBOutlet weak var imageView: UIImageView!
+    var photo: UIImage!
+    var photoDelegate: PhotoDelegate!
+    @IBOutlet weak var photoView: UIImageView!
+    
     let databaseRef = Database.database().reference().child("petstation").child("users")
     let storageRef = Storage.storage().reference()
     
@@ -20,9 +22,9 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(self.takePhoto))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(self.displayOptions))
         
-        self.imageView.image = self.image
+        self.photoView.image = self.photo
     }
     
 
@@ -36,22 +38,46 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     */
     
+    @objc func displayOptions() {
+        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (_) in
+            self.takePhoto()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Choose from Album", style: .default, handler: { (_) in
+            self.chooseFromAlum()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Save Photo", style: .default, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(actionSheet, animated: true, completion: nil)
+        
+    }
+    
     @objc func takePhoto() {
         let controller = UIImagePickerController()
-        if UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) {
-            controller.sourceType = UIImagePickerController.SourceType.camera
-        }
-        else {
-            controller.sourceType = UIImagePickerController.SourceType.photoLibrary
+        guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) else {
+            displayMessage("Camera unvailable", "Error")
+            return
         }
         
+        controller.sourceType = UIImagePickerController.SourceType.camera
         controller.allowsEditing = false
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
     
-    @IBAction func savePhoto(_ sender: Any) {
-        guard let image = imageView.image else {
+    @objc func chooseFromAlum() {
+        let controller = UIImagePickerController()
+        
+        controller.sourceType = UIImagePickerController.SourceType.photoLibrary
+        controller.allowsEditing = false
+        controller.delegate = self
+        self.present(controller, animated: true, completion: nil)
+    }
+    
+    
+    
+    @objc func savePhoto(_ sender: Any) {
+        guard let image = self.photoView.image else {
             displayMessage("Cannot save until a photo has been taken!", "Error")
             return
         }
@@ -98,7 +124,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            imageView.image = pickedImage
+            self.photoView.image = pickedImage
         }
         dismiss(animated: true, completion: nil)
     }

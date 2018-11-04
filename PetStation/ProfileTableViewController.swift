@@ -296,7 +296,8 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         // Pass the selected object to the new view controller.
         if segue.identifier == "PhotoSegue" {
             let controller = segue.destination as! CameraViewController
-            controller.image = self.photo
+            controller.photoDelegate = self
+            controller.photo = self.photo
         }
         if segue.identifier == "NameSegue" {
             let controller = segue.destination as! NameTableViewController
