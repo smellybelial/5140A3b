@@ -31,9 +31,13 @@ class PlayViewController: UIViewController {
         
         // Do any additional setup after loading the view.
         self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
-//        self.videoView.loadVideoID(self.videoID)
         self.loadVideo()
-        setCameraSwitch(.ON)
+        
+        //
+        guard let uid = getCurrentUserID() else {
+            return
+        }
+        self.databaseRef.child(uid).child("toy/cameraSwitch").onDisconnectSetValue(CameraSwitch.OFF.rawValue)
     }
     
     override func viewWillAppear(_ animated: Bool) {

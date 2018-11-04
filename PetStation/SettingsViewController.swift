@@ -12,19 +12,6 @@ class SettingsViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let alertController = UIAlertController(title: "Error", message: "Hello", preferredStyle: .actionSheet)
-        
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
-        alertController.addAction(UIAlertAction(title: "Pop", style: .cancel, handler: { (_) in
-            self.navigationController?.popViewController(animated: true)
-        }))
-        
-        self.present(alertController, animated: true, completion: nil)
-//        self.present(alertController, animated: true, completion: {
-//            alertController.dismiss(animated: true, completion: {self.navigationController?.popViewController(animated: true)})
-//        })
-
 
         // Do any additional setup after loading the view.
     }

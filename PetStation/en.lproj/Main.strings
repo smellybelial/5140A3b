@@ -1,0 +1,114 @@
+
+/* Class = "UIButton"; normalTitle = "Manual Feed Me!"; ObjectID = "1IH-fc-GcO"; */
+"1IH-fc-GcO.normalTitle" = "Manual Feed Me!";
+
+/* Class = "UIButton"; normalTitle = "Start Play!"; ObjectID = "2SN-Ex-eSK"; */
+"2SN-Ex-eSK.normalTitle" = "Start Play!";
+
+/* Class = "UINavigationItem"; title = "Login/Signup"; ObjectID = "2Zf-Hs-2TN"; */
+"2Zf-Hs-2TN.title" = "Login/Signup";
+
+/* Class = "UITabBarItem"; title = "Home"; ObjectID = "88g-yU-RiO"; */
+"88g-yU-RiO.title" = "Home";
+
+/* Class = "UITextField"; placeholder = "Password"; ObjectID = "H5Z-mf-woi"; */
+"H5Z-mf-woi.placeholder" = "Password";
+
+/* Class = "UIViewController"; title = "Play"; ObjectID = "IbE-b8-7Xd"; */
+"IbE-b8-7Xd.title" = "Play";
+
+/* Class = "UILabel"; text = "Settings"; ObjectID = "IvB-Zf-Ok1"; */
+"IvB-Zf-Ok1.text" = "Settings";
+
+/* Class = "UITabBarItem"; title = "Play"; ObjectID = "JzC-8J-ijb"; */
+"JzC-8J-ijb.title" = "Play";
+
+/* Class = "UIButton"; normalTitle = "Login"; ObjectID = "KY6-AY-dZu"; */
+"KY6-AY-dZu.normalTitle" = "Login";
+
+/* Class = "UITabBarItem"; title = "Pet Profile"; ObjectID = "L7w-CA-3V0"; */
+"L7w-CA-3V0.title" = "Pet Profile";
+
+/* Class = "UISegmentedControl"; MaP-Gn-cmO.segmentTitles[0] = "1/4 CUP"; ObjectID = "MaP-Gn-cmO"; */
+"MaP-Gn-cmO.segmentTitles[0]" = "1/4 CUP";
+
+/* Class = "UISegmentedControl"; MaP-Gn-cmO.segmentTitles[1] = "1/3 CUP"; ObjectID = "MaP-Gn-cmO"; */
+"MaP-Gn-cmO.segmentTitles[1]" = "1/3 CUP";
+
+/* Class = "UISegmentedControl"; MaP-Gn-cmO.segmentTitles[2] = "1/2 CUP"; ObjectID = "MaP-Gn-cmO"; */
+"MaP-Gn-cmO.segmentTitles[2]" = "1/2 CUP";
+
+/* Class = "UILabel"; text = "Label"; ObjectID = "Mn5-tN-kuu"; */
+"Mn5-tN-kuu.text" = "Label";
+
+/* Class = "UILabel"; text = "Detail"; ObjectID = "Nyu-6z-IMx"; */
+"Nyu-6z-IMx.text" = "Detail";
+
+/* Class = "UITextField"; placeholder = "Enter Pet Name"; ObjectID = "ODX-Cj-55W"; */
+"ODX-Cj-55W.placeholder" = "Enter Pet Name";
+
+/* Class = "UITableViewController"; title = "Weight"; ObjectID = "RSJ-GB-MGp"; */
+"RSJ-GB-MGp.title" = "Weight";
+
+/* Class = "UITabBarItem"; title = "Statistics"; ObjectID = "TSM-BP-INa"; */
+"TSM-BP-INa.title" = "Statistics";
+
+/* Class = "UIViewController"; title = "Feeder"; ObjectID = "TY5-vR-QJE"; */
+"TY5-vR-QJE.title" = "Feeder";
+
+/* Class = "UITabBarItem"; title = "Feeder"; ObjectID = "ZNQ-Mf-JwQ"; */
+"ZNQ-Mf-JwQ.title" = "Feeder";
+
+/* Class = "UITableViewController"; title = "Pet Profile"; ObjectID = "aMV-nh-GNK"; */
+"aMV-nh-GNK.title" = "Pet Profile";
+
+/* Class = "UILabel"; text = "Statistics"; ObjectID = "bsG-j3-4t9"; */
+"bsG-j3-4t9.text" = "Statistics";
+
+/* Class = "UILabel"; text = "Home"; ObjectID = "cpd-1t-YCJ"; */
+"cpd-1t-YCJ.text" = "Home";
+
+/* Class = "UIViewController"; title = "Settings"; ObjectID = "e3Q-hJ-rHC"; */
+"e3Q-hJ-rHC.title" = "Settings";
+
+/* Class = "UIButton"; normalTitle = "Register"; ObjectID = "eJB-Xe-Obk"; */
+"eJB-Xe-Obk.normalTitle" = "Register";
+
+/* Class = "UILabel"; text = "Amount"; ObjectID = "h6y-sT-iLc"; */
+"h6y-sT-iLc.text" = "Amount";
+
+/* Class = "UIViewController"; title = "Home"; ObjectID = "hPw-4i-23z"; */
+"hPw-4i-23z.title" = "Home";
+
+/* Class = "UITabBarController"; title = "Pet Station"; ObjectID = "hV3-Bn-nkI"; */
+"hV3-Bn-nkI.title" = "Pet Station";
+
+/* Class = "UITextField"; placeholder = "0.0"; ObjectID = "ibb-7Z-081"; */
+"ibb-7Z-081.placeholder" = "0.0";
+
+/* Class = "UIViewController"; title = "Statistics"; ObjectID = "j0w-NF-QYj"; */
+"j0w-NF-QYj.title" = "Statistics";
+
+/* Class = "UITableViewController"; title = "Name"; ObjectID = "ltp-Mf-kjt"; */
+"ltp-Mf-kjt.title" = "Name";
+
+/* Class = "UITextField"; placeholder = "Email"; ObjectID = "tPC-Or-KfM"; */
+"tPC-Or-KfM.placeholder" = "Email";
+
+/* Class = "UILabel"; text = "Email Address:"; ObjectID = "tVZ-bP-TYD"; */
+"tVZ-bP-TYD.text" = "Email Address:";
+
+/* Class = "UILabel"; text = "Youtube ac"; ObjectID = "uLd-zk-X9D"; */
+"uLd-zk-X9D.text" = "Youtube ac";
+
+/* Class = "UIViewController"; title = "Photo"; ObjectID = "ulf-bh-VcP"; */
+"ulf-bh-VcP.title" = "Photo";
+
+/* Class = "UILabel"; text = "Password:"; ObjectID = "wp7-ly-gYq"; */
+"wp7-ly-gYq.text" = "Password:";
+
+/* Class = "UITableViewController"; title = "Gender"; ObjectID = "xa7-Op-pxU"; */
+"xa7-Op-pxU.title" = "Gender";
+
+/* Class = "UILabel"; text = "Title"; ObjectID = "y3T-Ma-3Lw"; */
+"y3T-Ma-3Lw.text" = "Title";

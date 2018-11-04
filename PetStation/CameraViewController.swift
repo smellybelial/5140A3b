@@ -14,6 +14,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     var photo: UIImage!
     var photoDelegate: PhotoDelegate!
     @IBOutlet weak var photoView: UIImageView!
+    @IBOutlet weak var uploading: UIActivityIndicatorView!
     
     let databaseRef = Database.database().reference().child("petstation").child("users")
     let storageRef = Storage.storage().reference()
@@ -46,13 +47,12 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         actionSheet.addAction(UIAlertAction(title: "Choose from Album", style: .default, handler: { (_) in
             self.chooseFromAlum()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Save Photo", style: .default, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
         self.present(actionSheet, animated: true, completion: nil)
         
     }
     
-    @objc func takePhoto() {
+    func takePhoto() {
         let controller = UIImagePickerController()
         guard UIImagePickerController.isSourceTypeAvailable(UIImagePickerController.SourceType.camera) else {
             displayMessage("Camera unvailable", "Error")
@@ -65,7 +65,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.present(controller, animated: true, completion: nil)
     }
     
-    @objc func chooseFromAlum() {
+    func chooseFromAlum() {
         let controller = UIImagePickerController()
         
         controller.sourceType = UIImagePickerController.SourceType.photoLibrary
@@ -76,8 +76,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     
     
-    @objc func savePhoto(_ sender: Any) {
-        guard let image = self.photoView.image else {
+    func savePhoto(_ pickedImage: UIImage?) {
+        guard let image = pickedImage else {
             displayMessage("Cannot save until a photo has been taken!", "Error")
             return
         }
@@ -87,6 +87,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
             return
         }
         
+        self.uploading.startAnimating()
         let date = UInt(Date().timeIntervalSince1970)
         var data = Data()
 //        data = UIImageJPEGRepresentation(image, 0.8)!
@@ -106,6 +107,8 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
                     }
                     self.databaseRef.child(userID).child("pet/photopath").setValue(downloadURL)
                     self.databaseRef.child(userID).child("pet/filepath").setValue("\(date)")
+                    self.uploading.stopAnimating()
+                    self.photoView.image = image
                     self.displayMessage("Image saved to Firebase", "Success")
                 })
             }
@@ -119,12 +122,14 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
             let fileManager = FileManager.default
             fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
         }
+        
+        self.photoDelegate.updatePhoto("\(date)")
     }
     
-    
+    // MARK: - ImagePickerController Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-            self.photoView.image = pickedImage
+            self.savePhoto(pickedImage)
         }
         dismiss(animated: true, completion: nil)
     }
@@ -134,9 +139,13 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         self.dismiss(animated: true, completion: nil)
     }
     
-    func displayMessage(_ message: String,_ title: String) {
+    func displayMessage(_ message: String, _ title: String) {
+        self.displayMessage(message, title, handler: nil)
+    }
+    
+    func displayMessage(_ message: String, _ title: String, handler: ((UIAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: handler))
         self.present(alertController, animated: true, completion: nil)
     }
 

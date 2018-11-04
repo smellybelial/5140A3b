@@ -13,9 +13,9 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItem.Style.plain, target: self, action: #selector(TabBarController.signout))
+        self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signout))
         
-        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icons8-settings-filled-50"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(TabBarController.settings))
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icons8-settings-filled-50"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.settings))
 
         // Do any additional setup after loading the view.
     }
@@ -23,9 +23,8 @@ class TabBarController: UITabBarController {
     @objc func signout() {
         do {
             try Auth.auth().signOut()
+            self.navigationController?.popViewController(animated: true)
         } catch {}
-        
-        self.navigationController?.popViewController(animated: true)
     }
     
     @objc func settings() {
