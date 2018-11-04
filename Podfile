@@ -10,8 +10,11 @@ target 'PetStation' do
   pod 'Firebase/Auth'
   pod 'Firebase/Database'
   pod 'Firebase/Storage'
-  pod 'FirebaseUI'
+  pod 'FirebaseUI/Auth'
+  pod 'FirebaseUI/Google'
   pod 'YouTubePlayer-Swift'
   pod 'YouTubePlayer'
+  pod 'Charts'
+  pod 'ChartsRealm'
 
 end
