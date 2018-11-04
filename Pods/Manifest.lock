@@ -108,7 +108,6 @@ PODS:
   - RealmSwift (3.11.1):
     - Realm (= 3.11.1)
   - YouTubePlayer (0.4.0)
-  - YouTubePlayer-Swift (1.0)
 
 DEPENDENCIES:
   - Charts
@@ -120,7 +119,6 @@ DEPENDENCIES:
   - FirebaseUI/Auth
   - FirebaseUI/Google
   - YouTubePlayer
-  - YouTubePlayer-Swift
 
 SPEC REPOS:
   https://github.com/cocoapods/specs.git:
@@ -146,7 +144,6 @@ SPEC REPOS:
     - Realm
     - RealmSwift
     - YouTubePlayer
-    - YouTubePlayer-Swift
 
 SPEC CHECKSUMS:
   Charts: f122fb70b19847fa5817d018b77d6c5a2296ab25
@@ -171,8 +168,7 @@ SPEC CHECKSUMS:
   Realm: 037c5919b9ceb59d6beed5d3b031096856b119b3
   RealmSwift: c9580133e73ef40ed340401af2dbc9a5790dfea7
   YouTubePlayer: 028451f6772f372d4759866db99824c676ac1473
-  YouTubePlayer-Swift: ae82f4bcb504162a872b852596a9dc1fa3828c34
 
-PODFILE CHECKSUM: 56ec58858f36a502dca54c917d2b2010e88b1769
+PODFILE CHECKSUM: 3b83995f4f246e86b46dcbe84b94022ca29235e6
 
 COCOAPODS: 1.5.3

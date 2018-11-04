@@ -8,7 +8,7 @@
 
 import UIKit
 import AVKit
-import YouTubePlayer_Swift
+import YouTubePlayer
 import Firebase
 
 enum Move: Int {

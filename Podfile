@@ -12,7 +12,6 @@ target 'PetStation' do
   pod 'Firebase/Storage'
   pod 'FirebaseUI/Auth'
   pod 'FirebaseUI/Google'
-  pod 'YouTubePlayer-Swift'
   pod 'YouTubePlayer'
   pod 'Charts'
   pod 'ChartsRealm'

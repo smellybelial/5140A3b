@@ -23,9 +23,6 @@
 		027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */; };
 		027AE6AE218E7D4E002C6BD9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */; };
 		027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */; };
-		027AE6B3218EF94D002C6BD9 /* YouTubePlayer_Swift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024450242180A85500A1CEE3 /* YouTubePlayer_Swift.framework */; };
-		027AE6B7218EF97B002C6BD9 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 027AE6B6218EF97B002C6BD9 /* Charts.framework */; };
-		027AE6B8218EF97B002C6BD9 /* Charts.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 027AE6B6218EF97B002C6BD9 /* Charts.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		027AE6BE218F0565002C6BD9 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6BD218F0565002C6BD9 /* StatisticsViewController.swift */; };
 		02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */; };
 		02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */; };
@@ -38,20 +35,6 @@
 		466AA4EE218C001B00FAE591 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */; };
 		46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E661D0218A6F6700B173FB /* FeederViewController.swift */; };
 /* End PBXBuildFile section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		027AE6B9218EF97B002C6BD9 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				027AE6B8218EF97B002C6BD9 /* Charts.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		024450162180816600A1CEE3 /* FirebaseAuth.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = FirebaseAuth.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -94,10 +77,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				027AE6B3218EF94D002C6BD9 /* YouTubePlayer_Swift.framework in Frameworks */,
 				024450272180AA6E00A1CEE3 /* YouTubePlayer.framework in Frameworks */,
 				0244501F218081AC00A1CEE3 /* CoreData.framework in Frameworks */,
-				027AE6B7218EF97B002C6BD9 /* Charts.framework in Frameworks */,
 				0244501D2180817E00A1CEE3 /* FirebaseStorage.framework in Frameworks */,
 				0244501B2180817600A1CEE3 /* FirebaseDatabase.framework in Frameworks */,
 				024450192180816F00A1CEE3 /* FirebaseCore.framework in Frameworks */,
@@ -193,7 +174,6 @@
 				02AA7E38217D4FC2007E5DEF /* Resources */,
 				2E7EC2B5D0846715961B26CE /* [CP] Embed Pods Frameworks */,
 				2E1CE5392ED2BC9C2F18464E /* [CP] Copy Pods Resources */,
-				027AE6B9218EF97B002C6BD9 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -280,7 +260,7 @@
 		};
 		2E7EC2B5D0846715961B26CE /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -296,7 +276,6 @@
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/YouTubePlayer/YouTubePlayer.framework",
-				"${BUILT_PRODUCTS_DIR}/YouTubePlayer-Swift/YouTubePlayer_Swift.framework",
 				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
 				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
@@ -313,7 +292,6 @@
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YouTubePlayer.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/YouTubePlayer_Swift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
