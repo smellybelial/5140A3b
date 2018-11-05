@@ -432,7 +432,7 @@
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="barChartView" destination="28l-w2-nfc" id="Pfe-LW-VN1"/>
-                        <outlet property="inputTextField" destination="Tvw-zn-zqy" id="1AI-FV-Zfx"/>
+                        <outlet property="dateTextField" destination="Tvw-zn-zqy" id="1AI-FV-Zfx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9K-Qb-1Uz" userLabel="First Responder" sceneMemberID="firstResponder"/>

@@ -20,7 +20,7 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     
 
     @IBOutlet weak var barChartView: BarChartView!
-    @IBOutlet weak var inputTextField: UITextField!
+    @IBOutlet weak var dateTextField: UITextField!
     var visitorCounts: [(date: Date, count: Int)] = []
     var feedingHistory: [(date: Double, amount: Double)]?
     var axisFormatDelegate: IAxisValueFormatter?
@@ -31,20 +31,22 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
 
         // Do any additional setup after loading the view.
         self.axisFormatDelegate = self
-        updateChartWithData()
+//        updateChartWithData()
+        loadFeedingHistory()
+        getFeedingHistory(dateRange: (from: 1541382171.0, to: 1541404171.0), completion: {(data) in self.drawChart(withData: data)})
     }
     
     @IBAction func addValue(_ sender: Any) {
-        if let value = inputTextField.text , value != "" {
+        if let value = dateTextField.text , value != "" {
             let date = Date()
             let count = (NumberFormatter().number(from: value)?.intValue)!
             self.visitorCounts.append((date, count))
-            inputTextField.text = ""
+            dateTextField.text = ""
         }
         updateChartWithData()
     }
     
-    func getFeedingHistory() {
+    func loadFeedingHistory() {
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
@@ -54,9 +56,9 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
                 return
             }
             var feedingHistory: [(Double, Double)] = []
-            dataset.forEach({ (elem) in
-                let date = elem.key as! Double
-                let amount = elem.value as! Double
+            dataset.forEach({ (entry) in
+                let date = Double(entry.key as! String)! / 1000
+                let amount = Double(entry.value as! Int)
                 feedingHistory.append((date, amount))
             })
             self.feedingHistory = feedingHistory
@@ -65,7 +67,13 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     
     func getFeedingHistory(dateRange: (from: Double, to: Double), completion: @escaping ([(date: Double, amount: Double)]) -> Void) {
         if self.feedingHistory != nil {
-            self.getFeedingHistoryLocally(dateRange: dateRange)
+            var boundedFeedingHistory: [(Double, Double)] = []
+            self.feedingHistory?.forEach({ (entry) in
+                if entry.date >= dateRange.from && entry.date <= dateRange.to {
+                    boundedFeedingHistory.append(entry)
+                }
+            })
+            completion(boundedFeedingHistory)
         } else {
             guard let uid = Auth.auth().currentUser?.uid else {
                 return
@@ -75,21 +83,27 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
                 guard let dataset = snapshot.value as? NSDictionary else {
                     return
                 }
-                var feedingHistory: [(Double, Double)] = []
-                dataset.forEach({ (elem) in
-                    let date = elem.key as! Double
-                    let amount = elem.value as! Double
+                var boundedFeedingHistory: [(Double, Double)] = []
+                dataset.forEach({ (entry) in
+                    let date = Double(entry.key as! String)! / 1000
+                    let amount = Double(entry.value as! Int)
                     if date >= dateRange.from && date <= dateRange.to {
-                        feedingHistory.append((date, amount))
+                        boundedFeedingHistory.append((date, amount))
                     }
                 })
-                completion(feedingHistory)
+                completion(boundedFeedingHistory)
             }
         }
     }
     
-    func getFeedingHistoryLocally(dateRange: (from: Double, to: Double)) {
-        
+    func getFeedingHistoryLocally(dateRange: (from: Double, to: Double)) -> [(date: Double, amount: Double)] {
+        var feedingHistory: [(Double, Double)] = []
+        self.feedingHistory?.forEach({ (entry) in
+            if entry.date >= dateRange.from && entry.date <= dateRange.to {
+                feedingHistory.append(entry)
+            }
+        })
+        return feedingHistory
     }
     
     func updateChartWithData() {
@@ -100,6 +114,20 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
             dataEntries.append(dataEntry)
         }
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Visitor count")
+        let chartData = BarChartData(dataSet: chartDataSet)
+        barChartView.data = chartData
+        
+        let xaxis = barChartView.xAxis
+        xaxis.valueFormatter = axisFormatDelegate
+    }
+    
+    func drawChart(withData: [(date: Double, amount: Double)]) {
+        var dataEntries: [BarChartDataEntry] = []
+        for i in 0..<withData.count {
+            let dataEntry = BarChartDataEntry(x: Double(withData[i].date), y: Double(withData[i].amount))
+            dataEntries.append(dataEntry)
+        }
+        let chartDataSet = BarChartDataSet(values: dataEntries, label: "Feeding Amount")
         let chartData = BarChartData(dataSet: chartDataSet)
         barChartView.data = chartData
         
@@ -123,11 +151,11 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
 
 }
 
-/*
+
 class LineViewController: UIViewController {
     
     var datePicker: UIDatePicker?
-    var chartView: BarsChart!
+//    var chartView: BarsChart!
     var oneDay = Date()
     var chart: UIView?
     
@@ -154,11 +182,9 @@ class LineViewController: UIViewController {
         let startDate = dateFormatter.date(from: "21/09/2018")
         let endDate = dateFormatter.date(from: "24/09/2018")
         self.getTemperatures(from: startDate!, to: endDate!)
-        self.getAllTemperatures()
-        
         
         // set default chart
-        self.chart = showChart(points: hourlyTemperatures, color: UIColor.red)
+//        self.chart = showChart(points: hourlyTemperatures, color: UIColor.red)
         self.view.addSubview(self.chart!)
         
         // Do any additional setup after loading the view, typically from a nib.
@@ -195,16 +221,17 @@ class LineViewController: UIViewController {
         switch sender.selectedSegmentIndex {
         case 0:
             groupByHour()
-            self.chart = showChart(points: hourlyTemperatures, color: UIColor.red)
+//            self.chart = showChart(points: hourlyTemperatures, color: UIColor.red)
         case 1:
             groupByDay()
-            self.chart = showChart(points: dailyTemperatures, color: UIColor.blue)
+//            self.chart = showChart(points: dailyTemperatures, color: UIColor.blue)
         default:
             return
         }
         self.view.addSubview(self.chart!)
     }
     
+    /*
     //need a selected day
     func showChart(points: [(String, Double)], color: UIColor) -> UIView {
         guard points.count > 0 else {
@@ -237,49 +264,38 @@ class LineViewController: UIViewController {
         self.chartView = chart
         return chart.view
     }
-    
-    //replace this to the hardcoded line chartPoints
-    func getChartPoints(tempTime: NSDictionary) -> Array<(Double, Double)> {
-        var chartPoints = Array<(Double, Double)>()
-        for (time, temp) in tempTime {
-            let newTime = Double(time as! Double)
-            let newTemp = Double(temp as! Double)
-            
-            chartPoints.append((newTime, newTemp))
-        }
-        return chartPoints
-    }
+    */
     
     // get range of the dataset
-    func getRange(points: [(x: String, y: Double)] ) -> (min: Double, max: Double) {
-        
-        // get minimum value
-        let min = points.min { (point1, point2) -> Bool in
-            return point1.y < point2.y
-        }
-        
-        // get maximum value
-        let max = points.max { (point1, point2) -> Bool in
-            return point1.y < point2.y
-        }
-        
-        return (min!.y, max!.y)
-    }
+//    func getRange(points: [(x: String, y: Double)] ) -> (min: Double, max: Double) {
+//
+//        // get minimum value
+//        let min = points.min { (point1, point2) -> Bool in
+//            return point1.y < point2.y
+//        }
+//
+//        // get maximum value
+//        let max = points.max { (point1, point2) -> Bool in
+//            return point1.y < point2.y
+//        }
+//
+//        return (min!.y, max!.y)
+//    }
     
-    func getDomain(points: [(x: Date, y: Double)] ) -> (min: Date, max: Date) {
-        
-        // get minimum value
-        let min = points.min { (point1, point2) -> Bool in
-            return point1.x < point2.x
-        }
-        
-        // get maximum value
-        let max = points.max { (point1, point2) -> Bool in
-            return point1.x < point2.x
-        }
-        
-        return (min!.x, max!.x)
-    }
+//    func getDomain(points: [(x: Date, y: Double)] ) -> (min: Date, max: Date) {
+//
+//        // get minimum value
+//        let min = points.min { (point1, point2) -> Bool in
+//            return point1.x < point2.x
+//        }
+//
+//        // get maximum value
+//        let max = points.max { (point1, point2) -> Bool in
+//            return point1.x < point2.x
+//        }
+//
+//        return (min!.x, max!.x)
+//    }
     
     func datePickerSetUp() {
         datePicker = UIDatePicker()
@@ -288,7 +304,7 @@ class LineViewController: UIViewController {
         //set range of datePicker
         datePicker?.maximumDate = Date()//set the maximum date to current date
         datePicker?.minimumDate = Date(timeIntervalSince1970: Double(1536599965547/1000))
-        datePicker?.addTarget(self, action: #selector(LineViewController.dateChanged(datepicker:)), for: .valueChanged)
+        datePicker?.addTarget(self, action: #selector(self.dateChanged(datepicker:)), for: .valueChanged)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.viewTapped(gestureRecogizer:)))
         view.addGestureRecognizer(tapGesture)
@@ -320,7 +336,7 @@ class LineViewController: UIViewController {
         }
     }
     
-    //display eroor msg
+    //display error msg
     func displayErrorMessage(_ errorMessage: String) {
         let alertController = UIAlertController(title: "Error", message: errorMessage, preferredStyle: .alert)
         alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
@@ -336,26 +352,6 @@ class LineViewController: UIViewController {
         }
     }
     
-    func getAllTemperatures() {
-        self.allTemperatures.removeAll()
-        
-        guard let userRef = getUserRef()?.child("history") else {
-            return
-        }
-        
-        userRef.observeSingleEvent(of: .value) { (snapshot) in
-            guard let value = snapshot.value as? NSDictionary else {
-                return
-            }
-            
-            for (date, record) in value {
-                let newDate = Date(timeIntervalSince1970: Double(date as! String)! / 1000)
-                let newRecord = record as! NSDictionary
-                let temp = newRecord["Temperature"] as! Double
-                self.allTemperatures.append((date: newDate, temp: temp))
-            }
-        }
-    }
     
     func getUserRef() -> DatabaseReference? {
         let user = Auth.auth().currentUser
@@ -426,6 +422,5 @@ class LineViewController: UIViewController {
         }
     }
     
-    
+ 
 }
-*/
