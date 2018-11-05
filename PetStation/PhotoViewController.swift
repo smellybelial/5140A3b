@@ -1,5 +1,5 @@
 //
-//  CameraViewController.swift
+//  PhotoViewController.swift
 //  PetStation
 //
 //  Created by Xiaotian LIU on 3/11/18.
@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class CameraViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
 
     var photo: UIImage!
     var photoDelegate: PhotoDelegate!

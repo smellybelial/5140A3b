@@ -107,7 +107,7 @@
         <!--Photo-->
         <scene sceneID="C1U-6U-gEF">
             <objects>
-                <viewController title="Photo" id="ulf-bh-VcP" customClass="CameraViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController title="Photo" id="ulf-bh-VcP" customClass="PhotoViewController" customModule="PetStation" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aLz-n7-WvJ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
