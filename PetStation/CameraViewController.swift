@@ -15,6 +15,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     var photoDelegate: PhotoDelegate!
     @IBOutlet weak var photoView: UIImageView!
     @IBOutlet weak var uploading: UIActivityIndicatorView!
+    var actionSheet: UIAlertController?
     
     let databaseRef = Database.database().reference().child("petstation").child("users")
     let storageRef = Storage.storage().reference()
@@ -39,17 +40,22 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     }
     */
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        if let actionSheet = self.actionSheet {
+            actionSheet.dismiss(animated: true, completion: nil)
+        }
+    }
+    
     @objc func displayOptions() {
-        let actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-        actionSheet.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (_) in
+        self.actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        self.actionSheet!.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (_) in
             self.takePhoto()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Choose from Album", style: .default, handler: { (_) in
+        self.actionSheet!.addAction(UIAlertAction(title: "Choose from Album", style: .default, handler: { (_) in
             self.chooseFromAlum()
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .default, handler: nil))
-        self.present(actionSheet, animated: true, completion: nil)
-        
+        self.actionSheet!.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        self.present(self.actionSheet!, animated: true, completion: nil)
     }
     
     func takePhoto() {
@@ -60,7 +66,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         }
         
         controller.sourceType = UIImagePickerController.SourceType.camera
-        controller.allowsEditing = false
+        controller.allowsEditing = true
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
@@ -69,7 +75,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let controller = UIImagePickerController()
         
         controller.sourceType = UIImagePickerController.SourceType.photoLibrary
-        controller.allowsEditing = false
+        controller.allowsEditing = true
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
@@ -91,7 +97,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
         let date = UInt(Date().timeIntervalSince1970)
         var data = Data()
 //        data = UIImageJPEGRepresentation(image, 0.8)!
-        data = UIImage.jpegData(image)(compressionQuality: 0.8)!
+        data = UIImage.jpegData(image)(compressionQuality: 0.1)!
         
         let imageRef = storageRef.child("\(userID)/\(date)")
         let metadata = StorageMetadata()
@@ -128,7 +134,7 @@ class CameraViewController: UIViewController, UIImagePickerControllerDelegate, U
     
     // MARK: - ImagePickerController Delegate
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        if let pickedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+        if let pickedImage = info[UIImagePickerController.InfoKey.editedImage] as? UIImage {
             self.savePhoto(pickedImage)
         }
         dismiss(animated: true, completion: nil)
