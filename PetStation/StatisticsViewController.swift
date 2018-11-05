@@ -9,6 +9,7 @@
 import UIKit
 import Charts
 import ChartsRealm
+import Firebase
 
 class StatisticsViewController: UIViewController, IAxisValueFormatter {
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
@@ -21,7 +22,9 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var inputTextField: UITextField!
     var visitorCounts: [(date: Date, count: Int)] = []
+    var feedingHistory: [(date: Double, amount: Double)]?
     var axisFormatDelegate: IAxisValueFormatter?
+    let databaseRef: DatabaseReference = Database.database().reference().child("petstation/users")
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,53 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         updateChartWithData()
     }
     
+    func getFeedingHistory() {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        self.databaseRef.child(uid).child("feedHistory").observeSingleEvent(of: .value) { (snapshot) in
+            guard let dataset = snapshot.value as? NSDictionary else {
+                return
+            }
+            var feedingHistory: [(Double, Double)] = []
+            dataset.forEach({ (elem) in
+                let date = elem.key as! Double
+                let amount = elem.value as! Double
+                feedingHistory.append((date, amount))
+            })
+            self.feedingHistory = feedingHistory
+        }
+    }
+    
+    func getFeedingHistory(dateRange: (from: Double, to: Double), completion: @escaping ([(date: Double, amount: Double)]) -> Void) {
+        if self.feedingHistory != nil {
+            self.getFeedingHistoryLocally(dateRange: dateRange)
+        } else {
+            guard let uid = Auth.auth().currentUser?.uid else {
+                return
+            }
+            
+            self.databaseRef.child(uid).child("feedHistory").observeSingleEvent(of: .value) { (snapshot) in
+                guard let dataset = snapshot.value as? NSDictionary else {
+                    return
+                }
+                var feedingHistory: [(Double, Double)] = []
+                dataset.forEach({ (elem) in
+                    let date = elem.key as! Double
+                    let amount = elem.value as! Double
+                    if date >= dateRange.from && date <= dateRange.to {
+                        feedingHistory.append((date, amount))
+                    }
+                })
+                completion(feedingHistory)
+            }
+        }
+    }
+    
+    func getFeedingHistoryLocally(dateRange: (from: Double, to: Double)) {
+        
+    }
     
     func updateChartWithData() {
         var dataEntries: [BarChartDataEntry] = []
@@ -66,6 +116,10 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         // Pass the selected object to the new view controller.
     }
     */
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
+    }
 
 }
 
@@ -93,6 +147,7 @@ class LineViewController: UIViewController {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
         dateTextView.text = dateFormatter.string(from: oneDay)
+ 
         datePickerSetUp()
         dateTextView.allowsEditingTextAttributes = false
         
@@ -235,7 +290,7 @@ class LineViewController: UIViewController {
         datePicker?.minimumDate = Date(timeIntervalSince1970: Double(1536599965547/1000))
         datePicker?.addTarget(self, action: #selector(LineViewController.dateChanged(datepicker:)), for: .valueChanged)
         
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(LineViewController.viewTapped(gestureRecogizer:)))
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(self.viewTapped(gestureRecogizer:)))
         view.addGestureRecognizer(tapGesture)
         
         dateTextView.inputView = datePicker
@@ -371,35 +426,6 @@ class LineViewController: UIViewController {
         }
     }
     
-    var colorChanges: [(String, Int)] = []
     
-    func getColorChanges(from: Date, to: Date) {
-        
-        guard let userRef = getUserRef()?.child("history") else {
-            return
-        }
-        
-        userRef.observeSingleEvent(of: .value) { (snapshot) in
-            guard let value = snapshot.value as? NSDictionary else {
-                return
-            }
-            
-            var colors: [(date: Date, red: Double, green: Double, blue: Double)] = []
-            for (date, record) in value {
-                let newDate = Date(timeIntervalSince1970: Double(date as! String)! / 1000)
-                if newDate >= from && newDate <= to {
-                    let newRecord = record as! NSDictionary
-                    
-                    let red = newRecord["Red"] as! Double
-                    let green = newRecord["Green"] as! Double
-                    let blue = newRecord["Blue"] as! Double
-                    
-                    colors.append((date: newDate, red: red, green: green, blue: blue))
-                }
-            }
-            
-            
-        }
-    }
 }
 */
