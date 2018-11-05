@@ -14,7 +14,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     var photo: UIImage!
     var photoDelegate: PhotoDelegate!
     @IBOutlet weak var photoView: UIImageView!
-    @IBOutlet weak var uploading: UIActivityIndicatorView!
+    @IBOutlet weak var busy: UIActivityIndicatorView!
     var actionSheet: UIAlertController?
     
     let databaseRef = Database.database().reference().child("petstation").child("users")
@@ -26,7 +26,13 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         // Do any additional setup after loading the view.
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .camera, target: self, action: #selector(self.displayOptions))
         
-        self.photoView.image = self.photo
+        if let photo = self.photo {
+            self.photoView.image = photo
+        } else {
+            self.busy.startAnimating()
+//            photoDelegate
+        }
+        
     }
     
 
@@ -93,12 +99,14 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             return
         }
         
-        self.uploading.startAnimating()
+        self.busy.startAnimating()
+        
+        // Preparing timestamp and image data
         let date = UInt(Date().timeIntervalSince1970)
         var data = Data()
-//        data = UIImageJPEGRepresentation(image, 0.8)!
         data = UIImage.jpegData(image)(compressionQuality: 0.1)!
         
+        // Save image data to firebase storage
         let imageRef = storageRef.child("\(userID)/\(date)")
         let metadata = StorageMetadata()
         metadata.contentType = "image/jpg"
@@ -106,16 +114,26 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             if error != nil {
                 self.displayMessage("Could not upload image", "Error")
             } else {
-//                let downloadURL = metaData!.downloadURL()!.absoluteString
+                // get image downloadURL, and save it to firebase database
                 imageRef.downloadURL(completion: { (url, error) in
+                    // get image downloadURL in firebase storage
                     guard let downloadURL = url?.absoluteString else {
                         return
                     }
+                    
+                    // save to firebase database
                     self.databaseRef.child(userID).child("pet/photopath").setValue(downloadURL)
                     self.databaseRef.child(userID).child("pet/filepath").setValue("\(date)")
-                    self.uploading.stopAnimating()
+                    
                     self.photoView.image = image
-                    self.displayMessage("Image saved to Firebase", "Success")
+                    self.busy.stopAnimating()
+                    
+                    let alertController = UIAlertController(title: "Success", message: "Image saved to Firebase", preferredStyle: UIAlertController.Style.alert)
+                    self.present(alertController, animated: true, completion: {
+                        let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
+                            alertController.dismiss(animated: true, completion: nil)
+                        })
+                    })
                 })
             }
         }
@@ -146,13 +164,8 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     func displayMessage(_ message: String, _ title: String) {
-        self.displayMessage(message, title, handler: nil)
-    }
-    
-    func displayMessage(_ message: String, _ title: String, handler: ((UIAlertAction) -> Void)?) {
         let alertController = UIAlertController(title: title, message: message, preferredStyle: UIAlertController.Style.alert)
-        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: handler))
+        alertController.addAction(UIAlertAction(title: "Dismiss", style: UIAlertAction.Style.default, handler: nil))
         self.present(alertController, animated: true, completion: nil)
     }
-
 }

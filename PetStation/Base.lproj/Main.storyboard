@@ -137,8 +137,8 @@
                         <viewLayoutGuide key="safeArea" id="HNU-0g-fIC"/>
                     </view>
                     <connections>
+                        <outlet property="busy" destination="TBe-rF-zdC" id="eov-S2-gTt"/>
                         <outlet property="photoView" destination="cNS-AV-Iug" id="UKx-UP-di6"/>
-                        <outlet property="uploading" destination="TBe-rF-zdC" id="eov-S2-gTt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="94h-UA-6K2" userLabel="First Responder" sceneMemberID="firstResponder"/>

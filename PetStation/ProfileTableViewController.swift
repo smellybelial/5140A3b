@@ -34,6 +34,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
     
     var url: String = ""
     var photo: UIImage?
+    let defaultPhoto = UIImage(named: "pawprints")
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,6 +61,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
             self.pet?.weight = (pet["weight"] as! Double)
             
             guard let url = pet["photopath"] as? String else {
+                self.photo = self.defaultPhoto
                 self.tableView.reloadData()
                 return
             }
@@ -163,7 +165,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         if indexPath.section == 0 {
             let photoCell = tableView.dequeueReusableCell(withIdentifier: "ProfilePhotoCell", for: indexPath) as! PhotoTableViewCell
             photoCell.textLabel?.text = "Photo"
-            photoCell.photoView.image = self.photo ?? UIImage(named: "pawprints")
+            photoCell.photoView.image = self.photo ?? self.defaultPhoto
             cell = photoCell
         }
 
