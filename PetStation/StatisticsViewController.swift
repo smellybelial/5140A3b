@@ -11,17 +11,25 @@ import Charts
 import ChartsRealm
 import Firebase
 
+enum DateFormat: String {
+    case Daily = "HH:mm"
+    case Weekly = "dd-MM E"
+    case Monthly = "dd/MM"
+    case forDatePicker = "dd-MMM-yyyy"
+}
+
 class StatisticsViewController: UIViewController, IAxisValueFormatter {
+    // IAxisValueFormattor
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm.ss"
+        dateFormatter.dateFormat = DateFormat.Daily.rawValue
         return dateFormatter.string(from: Date(timeIntervalSince1970: value))
     }
     
 
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var dateTextField: UITextField!
-    var visitorCounts: [(date: Date, count: Int)] = []
+    var datePicker: UIDatePicker?
     var feedingHistory: [(date: Double, amount: Double)]?
     var axisFormatDelegate: IAxisValueFormatter?
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation/users")
@@ -31,19 +39,22 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
 
         // Do any additional setup after loading the view.
         self.axisFormatDelegate = self
-//        updateChartWithData()
         loadFeedingHistory()
         getFeedingHistory(dateRange: (from: 1541382171.0, to: 1541404171.0), completion: {(data) in self.drawChart(withData: data)})
+        datePickerSetUp()
     }
     
-    @IBAction func addValue(_ sender: Any) {
-        if let value = dateTextField.text , value != "" {
-            let date = Date()
-            let count = (NumberFormatter().number(from: value)?.intValue)!
-            self.visitorCounts.append((date, count))
-            dateTextField.text = ""
-        }
-        updateChartWithData()
+    func datePickerSetUp() {
+        datePicker = UIDatePicker()
+        datePicker?.datePickerMode = .date
+        datePicker?.addTarget(self, action: #selector(self.dateChanged(datepicker:)), for: .valueChanged)
+        dateTextField.inputView = datePicker
+    }
+    
+    @objc func dateChanged(datepicker: UIDatePicker) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        dateTextField.text = dateFormatter.string(from: (datePicker?.date)!)
     }
     
     func loadFeedingHistory() {
@@ -106,21 +117,6 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         return feedingHistory
     }
     
-    func updateChartWithData() {
-        var dataEntries: [BarChartDataEntry] = []
-        for i in 0..<self.visitorCounts.count {
-            let timeIntervalForDate: TimeInterval = visitorCounts[i].date.timeIntervalSince1970
-            let dataEntry = BarChartDataEntry(x: Double(timeIntervalForDate), y: Double(visitorCounts[i].count))
-            dataEntries.append(dataEntry)
-        }
-        let chartDataSet = BarChartDataSet(values: dataEntries, label: "Visitor count")
-        let chartData = BarChartData(dataSet: chartDataSet)
-        barChartView.data = chartData
-        
-        let xaxis = barChartView.xAxis
-        xaxis.valueFormatter = axisFormatDelegate
-    }
-    
     func drawChart(withData: [(date: Double, amount: Double)]) {
         var dataEntries: [BarChartDataEntry] = []
         for i in 0..<withData.count {
@@ -128,7 +124,9 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
             dataEntries.append(dataEntry)
         }
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Feeding Amount")
+        chartDataSet.setColor(.blue)
         let chartData = BarChartData(dataSet: chartDataSet)
+        chartData.barWidth = 1000.0
         barChartView.data = chartData
         
         let xaxis = barChartView.xAxis
