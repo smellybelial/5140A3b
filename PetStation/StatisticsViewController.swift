@@ -21,16 +21,14 @@ enum DateFormat: String {
 class StatisticsViewController: UIViewController, IAxisValueFormatter {
     // IAxisValueFormattor
     func stringForValue(_ value: Double, axis: AxisBase?) -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = DateFormat.Daily.rawValue
-        return dateFormatter.string(from: Date(timeIntervalSince1970: value))
+        return toString(date: Date(timeIntervalSince1970: value), format: DateFormat.Daily.rawValue)
     }
     
 
     @IBOutlet weak var barChartView: BarChartView!
     @IBOutlet weak var dateTextField: UITextField!
     var datePicker: UIDatePicker?
-    var feedingHistory: [(date: Double, amount: Double)]?
+    var feedingHistory: [(date: TimeInterval, amount: Double)]?
     var axisFormatDelegate: IAxisValueFormatter?
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation/users")
     
@@ -42,19 +40,82 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         loadFeedingHistory()
         getFeedingHistory(dateRange: (from: 1541382171.0, to: 1541404171.0), completion: {(data) in self.drawChart(withData: data)})
         datePickerSetUp()
+        dateTextField.text = toString(date: Date(), format: "dd/MM/yyyy")
+
     }
     
+    // MARK: - Date formatting
+    
+    /**
+     It converts a date to a String according to the date format
+     
+     - Parameters:
+        - date: the date being converted
+        - format: the date format
+     
+     - Returns: a formatted date string
+     */
+    func toString(date: Date, format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
+    }
+    
+    func toDate(dateString: String, format: String) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.date(from: dateString)
+    }
+    
+    func roundingToDay(date: Date) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return dateFormatter.date(from: dateFormatter.string(from: date))
+    }
+    
+    func roundingToDay(_ timeIntervalSince1970: TimeInterval) -> TimeInterval {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        return (dateFormatter.date(from: dateFormatter.string(from: Date(timeIntervalSince1970: timeIntervalSince1970)))?.timeIntervalSince1970)!
+    }
+    
+    func roundingTo1stDayOfMonth(date: Date) -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM"
+        return dateFormatter.date(from: dateFormatter.string(from: date))
+    }
+    
+    func getDateRangeOfOneDayContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
+        let from = roundingToDay(date: date)!
+        let to = Calendar.current.date(byAdding: .day, value: 1, to: from)!
+        return (from.timeIntervalSince1970, to.timeIntervalSince1970)
+    }
+    
+    func getDateRangeOfOneWeekContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
+        let aDate = roundingToDay(date: date)!
+        let weekday = Calendar.current.component(.weekday, from: aDate)
+        let from = Calendar.current.date(byAdding: .day, value: -weekday + 1, to: aDate)!
+        let to = Calendar.current.date(byAdding: .day, value: 7, to: from)!
+        return (from.timeIntervalSince1970, to.timeIntervalSince1970)
+    }
+    
+    func getDateRangeOfOneMonthContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
+        let from = roundingTo1stDayOfMonth(date: date)!
+        let to = Calendar.current.date(byAdding: .month, value: 1, to: from)
+        return (from.timeIntervalSince1970, (to?.timeIntervalSince1970)!)
+    }
+
+    // MARK: - Date Picker
     func datePickerSetUp() {
         datePicker = UIDatePicker()
         datePicker?.datePickerMode = .date
+        datePicker?.date = roundingToDay(date: Date())!
         datePicker?.addTarget(self, action: #selector(self.dateChanged(datepicker:)), for: .valueChanged)
         dateTextField.inputView = datePicker
     }
     
     @objc func dateChanged(datepicker: UIDatePicker) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateTextField.text = dateFormatter.string(from: (datePicker?.date)!)
+        dateTextField.text = toString(date: datepicker.date, format: "dd/MM/yyyy")
     }
     
     func loadFeedingHistory() {
@@ -66,7 +127,7 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
             guard let dataset = snapshot.value as? NSDictionary else {
                 return
             }
-            var feedingHistory: [(Double, Double)] = []
+            var feedingHistory: [(TimeInterval, Double)] = []
             dataset.forEach({ (entry) in
                 let date = Double(entry.key as! String)! / 1000
                 let amount = Double(entry.value as! Int)
@@ -76,45 +137,49 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         }
     }
     
-    func getFeedingHistory(dateRange: (from: Double, to: Double), completion: @escaping ([(date: Double, amount: Double)]) -> Void) {
+    func getFeedingHistory(dateRange: (from: TimeInterval, to: TimeInterval), completion: @escaping ([(date: TimeInterval, amount: Double)]) -> Void) {
         if self.feedingHistory != nil {
-            var boundedFeedingHistory: [(Double, Double)] = []
-            self.feedingHistory?.forEach({ (entry) in
-                if entry.date >= dateRange.from && entry.date <= dateRange.to {
-                    boundedFeedingHistory.append(entry)
-                }
-            })
+            let boundedFeedingHistory = getFeedingHistoryLocally(dateRange: dateRange)
             completion(boundedFeedingHistory)
         } else {
-            guard let uid = Auth.auth().currentUser?.uid else {
-                return
-            }
-            
-            self.databaseRef.child(uid).child("feedHistory").observeSingleEvent(of: .value) { (snapshot) in
-                guard let dataset = snapshot.value as? NSDictionary else {
-                    return
-                }
-                var boundedFeedingHistory: [(Double, Double)] = []
-                dataset.forEach({ (entry) in
-                    let date = Double(entry.key as! String)! / 1000
-                    let amount = Double(entry.value as! Int)
-                    if date >= dateRange.from && date <= dateRange.to {
-                        boundedFeedingHistory.append((date, amount))
-                    }
-                })
-                completion(boundedFeedingHistory)
-            }
+            getFeedingHistoryRemotely(dateRange: dateRange, completion: completion)
         }
     }
     
-    func getFeedingHistoryLocally(dateRange: (from: Double, to: Double)) -> [(date: Double, amount: Double)] {
-        var feedingHistory: [(Double, Double)] = []
+    func getFeedingHistoryLocally(dateRange: (from: TimeInterval, to: TimeInterval)) -> [(date: TimeInterval, amount: Double)] {
+        var boundedFeedingHistory: [(TimeInterval, Double)] = []
+        boundedFeedingHistory.append((dateRange.from, 0.0))
         self.feedingHistory?.forEach({ (entry) in
             if entry.date >= dateRange.from && entry.date <= dateRange.to {
-                feedingHistory.append(entry)
+                boundedFeedingHistory.append(entry)
             }
         })
-        return feedingHistory
+        boundedFeedingHistory.append((dateRange.to, 0.0))
+        
+        return boundedFeedingHistory
+    }
+    
+    func getFeedingHistoryRemotely(dateRange: (from: TimeInterval, to: TimeInterval), completion: @escaping ([(date: TimeInterval, amount: Double)]) -> Void) {
+        guard let uid = Auth.auth().currentUser?.uid else {
+            return
+        }
+        
+        self.databaseRef.child(uid).child("feedHistory").observeSingleEvent(of: .value) { (snapshot) in
+            guard let dataset = snapshot.value as? NSDictionary else {
+                return
+            }
+            var boundedFeedingHistory: [(Double, Double)] = []
+            boundedFeedingHistory.append((dateRange.from, 0.0))
+            dataset.forEach({ (entry) in
+                let date = Double(entry.key as! String)! / 1000
+                let amount = Double(entry.value as! Int)
+                if date >= dateRange.from && date <= dateRange.to {
+                    boundedFeedingHistory.append((date, amount))
+                }
+            })
+            boundedFeedingHistory.append((dateRange.to, 0.0))
+            completion(boundedFeedingHistory)
+        }
     }
     
     func drawChart(withData: [(date: Double, amount: Double)]) {
@@ -124,13 +189,15 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
             dataEntries.append(dataEntry)
         }
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Feeding Amount")
-        chartDataSet.setColor(.blue)
+//        chartDataSet.setColor(.blue)
         let chartData = BarChartData(dataSet: chartDataSet)
         chartData.barWidth = 1000.0
         barChartView.data = chartData
         
         let xaxis = barChartView.xAxis
         xaxis.valueFormatter = axisFormatDelegate
+        xaxis.labelPosition = .bottom
+        xaxis.labelRotationAngle = 45.0
     }
     
     /*
@@ -146,6 +213,31 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         self.view.endEditing(true)
     }
+    
+    func groupByDay(dataset: [(date: TimeInterval, amount: Double)]) -> [(TimeInterval, Double)] {
+        //        let aWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: (datePicker?.date)!)
+        //        getTemperatures(from: aWeekAgo!, to: (datePicker?.date)!)
+        
+        var dailyFeedingHistory: [(date: TimeInterval, temp: Double)] = []
+        
+        let TempDict = Dictionary(grouping: dataset) { (entry) -> String in
+            let date = roundingToDay(entry.date)
+            return String(date)
+        }
+        
+        for (key, group) in TempDict {
+            let sum = group.reduce(0.0) { (runningTotal, nextRecord) -> Double in
+                return runningTotal + nextRecord.amount
+            }
+            dailyFeedingHistory.append((Double(key)!, sum))
+        }
+        
+        dailyFeedingHistory.sort { (date1, date2) -> Bool in
+            return date1.date < date2.date
+        }
+        
+        return dailyFeedingHistory
+    }
 
 }
 
@@ -154,7 +246,6 @@ class LineViewController: UIViewController {
     
     var datePicker: UIDatePicker?
 //    var chartView: BarsChart!
-    var oneDay = Date()
     var chart: UIView?
     
     @IBOutlet weak var dateTextView: UITextField!
@@ -172,7 +263,7 @@ class LineViewController: UIViewController {
         //default selected date is current day
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        dateTextView.text = dateFormatter.string(from: oneDay)
+        dateTextView.text = dateFormatter.string(from: Date())
  
         datePickerSetUp()
         dateTextView.allowsEditingTextAttributes = false
@@ -197,72 +288,64 @@ class LineViewController: UIViewController {
     }
     
     @IBAction func choosePeriodSegment(_ sender: UISegmentedControl) {
-        if (isValidDate(dateString: dateTextView.text!) == true) {
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-            oneDay = dateFormatter.date(from: dateTextView.text!)!
-        }
-        else {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "dd/MM/yyyy"
+        if dateFormatter.date(from: dateTextView.text!) == nil {
             let error = "Input is not a valid date! Seleted Date is reset to default"
             displayErrorMessage(error)
-            
-            oneDay = Date() //reset to default date
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "dd/MM/yyyy"
-            dateTextView.text = dateFormatter.string(from: oneDay)//show the date in textfield
+            dateTextView.text = dateFormatter.string(from: Date())//show the date in textfield
         }
-        
         
         self.chart?.removeFromSuperview()
         
         switch sender.selectedSegmentIndex {
         case 0:
-            groupByHour()
-//            self.chart = showChart(points: hourlyTemperatures, color: UIColor.red)
+            let hourlyTemp = groupByHour(dataset: self.getTemperatures(from: (datePicker?.date)!, to: (self.datePicker?.date.addingTimeInterval(3600.0*24))!))
+            self.chart = showChart(points: hourlyTemp, color: UIColor.red)
         case 1:
-            groupByDay()
-//            self.chart = showChart(points: dailyTemperatures, color: UIColor.blue)
+            let weekTemp = groupByDay(dataset: self.getTemperatures(from: (datePicker?.date.addingTimeInterval(3600*24*(-7)))!, to: (datePicker?.date)!))
+            self.chart = showChart(points: weekTemp, color: UIColor.blue)
         default:
             return
         }
         self.view.addSubview(self.chart!)
     }
     
-    /*
+    
     //need a selected day
     func showChart(points: [(String, Double)], color: UIColor) -> UIView {
-        guard points.count > 0 else {
-            return UIView()
-        }
-        let range = getRange(points: points)
-        //        let domain = getDomain(points: points)
-        
-        //        let chartConfig = ChartConfigXY(
-        //            xAxisConfig: ChartAxisConfig (from: domain.min - 1, to: domain.max + 1, by: 1),
-        //            yAxisConfig: ChartAxisConfig (from: range.min - 2, to: range.max + 2, by: 1))
-        
-        let chartConfig = BarsChartConfig(valsAxisConfig: ChartAxisConfig(from: range.min - 2, to: range.max + 2, by: 1))
-        
-        let width = self.view.frame.width - 30
-        let frame = CGRect(x: 10, y: 180, width: self.view.frame.width - 30, height: self.view.frame.height - 200)
-        
-        
-        let chart = BarsChart(
-            frame: frame,
-            chartConfig: chartConfig,
-            xTitle: "Time",
-            yTitle: "Temperature",
-            bars: points,
-            color: color,
-            barWidth: CGFloat(width) / CGFloat(points.count + 1) - 10
-            //chart top y label not showing fully
-        )
-        
-        self.chartView = chart
-        return chart.view
+//        guard points.count > 0 else {
+//            return UIView()
+//        }
+//        let range = getRange(points: points)
+//        //        let domain = getDomain(points: points)
+//
+//        //        let chartConfig = ChartConfigXY(
+//        //            xAxisConfig: ChartAxisConfig (from: domain.min - 1, to: domain.max + 1, by: 1),
+//        //            yAxisConfig: ChartAxisConfig (from: range.min - 2, to: range.max + 2, by: 1))
+//
+//        let chartConfig = BarsChartConfig(valsAxisConfig: ChartAxisConfig(from: range.min - 2, to: range.max + 2, by: 1))
+//
+//        let width = self.view.frame.width - 30
+//        let frame = CGRect(x: 10, y: 180, width: self.view.frame.width - 30, height: self.view.frame.height - 200)
+//
+//
+//        let chart = BarsChart(
+//            frame: frame,
+//            chartConfig: chartConfig,
+//            xTitle: "Time",
+//            yTitle: "Temperature",
+//            bars: points,
+//            color: color,
+//            barWidth: CGFloat(width) / CGFloat(points.count + 1) - 10
+//            //chart top y label not showing fully
+//        )
+//
+//        self.chartView = chart
+//        return chart.view
+        return UIView()
     }
-    */
+    
     
     // get range of the dataset
 //    func getRange(points: [(x: String, y: Double)] ) -> (min: Double, max: Double) {
@@ -318,20 +401,7 @@ class LineViewController: UIViewController {
     @objc func dateChanged(datepicker: UIDatePicker) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd/MM/yyyy"
-        oneDay = (datePicker?.date)!
-        dateTextView.text = dateFormatter.string(from: oneDay)
-    }
-    
-    //check string is a valid date
-    func isValidDate(dateString: String) -> Bool {
-        let dateFormatterGet = DateFormatter()
-        dateFormatterGet.dateFormat = "dd/MM/yyyy"
-        if let _ = dateFormatterGet.date(from: dateString) {
-            return true
-        } else {
-            // Invalid date
-            return false
-        }
+        dateTextView.text = dateFormatter.string(from: datepicker.date)
     }
     
     //display error msg
@@ -341,13 +411,14 @@ class LineViewController: UIViewController {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func getTemperatures(from: Date, to: Date) {
-        self.temperatures.removeAll()
+    func getTemperatures(from: Date, to: Date) -> [(date: Date, temp: Double)] {
+        var temperatures: [(date: Date, temp: Double)] = []
         for (date, temp) in self.allTemperatures {
             if date >= from && date <= to {
-                self.temperatures.append((date: date, temp: temp))
+                temperatures.append((date: date, temp: temp))
             }
         }
+        return temperatures
     }
     
     
@@ -362,12 +433,13 @@ class LineViewController: UIViewController {
     
     
     // adapted from https://stackoverflow.com/a/31220067
-    func groupByHour() {
-        let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: oneDay)
-        getTemperatures(from: oneDay, to: nextDay!)
-        self.hourlyTemperatures.removeAll()
+    func groupByHour(dataset: [(date: Date, temp: Double)]) -> [(String, Double)]{
+//        let nextDay = Calendar.current.date(byAdding: .day, value: 1, to: (datePicker?.date)!)
+//        getTemperatures(from: (datePicker?.date)!, to: nextDay!)
         
-        let TempDict = Dictionary(grouping: self.temperatures) { (record) -> String in
+        var hourlyTemperatures: [(hour: String, temp: Double)] = []
+        
+        let TempDict = Dictionary(grouping: dataset) { (record) -> String in
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH"
             let date = dateFormatter.string(from: record.date)
@@ -379,24 +451,23 @@ class LineViewController: UIViewController {
                 return runningTotal + nextRecord.temp
             }
             let avgTemp = sum / Double(value.count)
-            self.hourlyTemperatures.append((key + ":00", avgTemp))
+            hourlyTemperatures.append((key + ":00", avgTemp))
         }
         
-        self.hourlyTemperatures.sort { (date1, date2) -> Bool in
-            return date1 < date2
+        hourlyTemperatures.sort { (date1, date2) -> Bool in
+            return date1.hour < date2.hour
         }
         
-        self.hourlyTemperatures.forEach { (temp) in
-            print(temp)
-        }
+        return hourlyTemperatures
     }
     
-    func groupByDay() {
-        let aWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: oneDay)
-        getTemperatures(from: aWeekAgo!, to: oneDay)
-        self.dailyTemperatures.removeAll()
+    func groupByDay(dataset: [(date: Date, temp: Double)]) -> [(String, Double)] {
+//        let aWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: (datePicker?.date)!)
+//        getTemperatures(from: aWeekAgo!, to: (datePicker?.date)!)
         
-        let TempDict = Dictionary(grouping: self.temperatures) { (record) -> String in
+        var dailyTemperatures: [(date: String, temp: Double)] = []
+        
+        let TempDict = Dictionary(grouping: dataset) { (record) -> String in
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "dd/MM/yyyy"
             let date = dateFormatter.string(from: record.date)
@@ -408,16 +479,14 @@ class LineViewController: UIViewController {
                 return runningTotal + nextRecord.temp
             }
             let avgTemp = sum / Double(value.count)
-            self.dailyTemperatures.append((key, avgTemp))
+            dailyTemperatures.append((key, avgTemp))
         }
         
-        self.dailyTemperatures.sort { (date1, date2) -> Bool in
-            return date1 < date2
+        dailyTemperatures.sort { (date1, date2) -> Bool in
+            return date1.date < date2.date
         }
         
-        self.dailyTemperatures.forEach { (temp) in
-            print(temp)
-        }
+        return dailyTemperatures
     }
     
  
