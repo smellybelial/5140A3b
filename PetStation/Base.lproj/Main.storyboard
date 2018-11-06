@@ -394,7 +394,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Tvw-zn-zqy">
-                                <rect key="frame" x="137.5" y="74" width="100" height="30"/>
+                                <rect key="frame" x="10" y="74" width="100" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="100" id="rmQ-f2-LH9"/>
                                 </constraints>
@@ -406,13 +406,26 @@
                                 <rect key="frame" x="10" y="124" width="355" height="474"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pHb-G7-rJu">
+                                <rect key="frame" x="186" y="74" width="179" height="29"/>
+                                <segments>
+                                    <segment title="Day"/>
+                                    <segment title="Week"/>
+                                    <segment title="Month"/>
+                                </segments>
+                                <connections>
+                                    <action selector="selectDisplayRange:" destination="j0w-NF-QYj" eventType="valueChanged" id="Rsr-8w-JME"/>
+                                </connections>
+                            </segmentedControl>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Tvw-zn-zqy" firstAttribute="centerX" secondItem="lbQ-Dm-PnH" secondAttribute="centerX" id="BBj-un-PFP"/>
+                            <constraint firstItem="Tvw-zn-zqy" firstAttribute="leading" secondItem="4Qy-ec-jbC" secondAttribute="leading" constant="10" id="0WK-Fd-xck"/>
                             <constraint firstItem="28l-w2-nfc" firstAttribute="leading" secondItem="4Qy-ec-jbC" secondAttribute="leading" constant="10" id="QHy-HZ-098"/>
+                            <constraint firstItem="4Qy-ec-jbC" firstAttribute="trailing" secondItem="pHb-G7-rJu" secondAttribute="trailing" constant="10" id="R4d-Tq-mCi"/>
                             <constraint firstItem="28l-w2-nfc" firstAttribute="top" secondItem="Tvw-zn-zqy" secondAttribute="bottom" constant="20" id="SQc-3e-zev"/>
                             <constraint firstItem="Tvw-zn-zqy" firstAttribute="top" secondItem="4Qy-ec-jbC" secondAttribute="top" constant="10" id="fl6-vm-g4d"/>
+                            <constraint firstItem="pHb-G7-rJu" firstAttribute="top" secondItem="4Qy-ec-jbC" secondAttribute="top" constant="10" id="i60-ZU-Z9s"/>
                             <constraint firstItem="4Qy-ec-jbC" firstAttribute="bottom" secondItem="28l-w2-nfc" secondAttribute="bottom" constant="20" id="tZN-lY-p9l"/>
                             <constraint firstItem="4Qy-ec-jbC" firstAttribute="trailing" secondItem="28l-w2-nfc" secondAttribute="trailing" constant="10" id="urS-wZ-Z9u"/>
                         </constraints>
@@ -423,6 +436,7 @@
                     <connections>
                         <outlet property="barChartView" destination="28l-w2-nfc" id="Pfe-LW-VN1"/>
                         <outlet property="dateTextField" destination="Tvw-zn-zqy" id="1AI-FV-Zfx"/>
+                        <outlet property="selectedDisplayRange" destination="pHb-G7-rJu" id="Re1-1c-H3v"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="e9K-Qb-1Uz" userLabel="First Responder" sceneMemberID="firstResponder"/>
