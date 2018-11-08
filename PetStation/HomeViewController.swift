@@ -10,12 +10,39 @@ import UIKit
 
 class HomeViewController: UIViewController {
 
+    @IBOutlet weak var helloTextField: UILabel!
+    @IBOutlet weak var datetimeTextField: UILabel!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
         // Do any additional setup after loading the view.
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        self.datetimeTextField.text = "Today is \(self.toString(date: Date(), format: "EEEE, dd/MMM/yyyy, HH:mm"))"
+        
+        let hour = Calendar.current.component(.hour, from: Date())
+        var period = ""
+        if hour < 12 {
+            period = "morning"
+        } else if hour < 18 {
+            period = "afternoon"
+        } else {
+            period = "evening"
+        }
+        
+        self.helloTextField.text = "Good \(period)!"
+    
+    }
+    
+    func toString(date: Date, format: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = format
+        return dateFormatter.string(from: date)
+    }
 
     /*
     // MARK: - Navigation

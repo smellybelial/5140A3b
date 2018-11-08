@@ -17,18 +17,24 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="petstation" translatesAutoresizingMaskIntoConstraints="NO" id="bYS-zB-mLM">
-                                <rect key="frame" x="20" y="248.5" width="335" height="70"/>
-                                <accessibility key="accessibilityConfiguration" hint="No Image">
-                                    <accessibilityTraits key="traits" image="YES"/>
-                                </accessibility>
-                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" usesAttributedText="YES" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EE7-XD-kRX">
+                                <rect key="frame" x="43.5" y="273" width="288.5" height="61.5"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="PetStation">
+                                        <attributes>
+                                            <color key="NSColor" red="0.0" green="0.58980089430000004" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <font key="NSFont" size="53" name="GillSans-Bold"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
-                            <constraint firstAttribute="trailing" secondItem="bYS-zB-mLM" secondAttribute="trailing" constant="20" id="Ihx-rE-lff"/>
-                            <constraint firstItem="bYS-zB-mLM" firstAttribute="leading" secondItem="Ze5-6b-2t3" secondAttribute="leading" constant="20" id="Tsy-DB-UwL"/>
-                            <constraint firstItem="bYS-zB-mLM" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-50" id="yrJ-vF-16E"/>
+                            <constraint firstItem="EE7-XD-kRX" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" constant="-30" id="PDo-vj-NqE"/>
+                            <constraint firstItem="EE7-XD-kRX" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="cDO-Wd-qnD"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
@@ -38,7 +44,4 @@
             <point key="canvasLocation" x="53" y="375"/>
         </scene>
     </scenes>
-    <resources>
-        <image name="petstation" width="512" height="70"/>
-    </resources>
 </document>

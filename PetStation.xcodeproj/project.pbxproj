@@ -35,6 +35,7 @@
 		02FD3C8F2193FEB90042FEEE /* PasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */; };
 		02FD3C912193FFDA0042FEEE /* PasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */; };
 		02FD3C9321940EB10042FEEE /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */; };
+		02FD3C9521947C060042FEEE /* AboutViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C9421947C060042FEEE /* AboutViewController.swift */; };
 		1A47C719441073F22D339814 /* Pods_PetStation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB2F336B0972304CBC4672B /* Pods_PetStation.framework */; };
 		466AA4EE218C001B00FAE591 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */; };
 		46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E661D0218A6F6700B173FB /* FeederViewController.swift */; };
@@ -73,6 +74,7 @@
 		02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableViewCell.swift; sourceTree = "<group>"; };
 		02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableViewController.swift; sourceTree = "<group>"; };
 		02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
+		02FD3C9421947C060042FEEE /* AboutViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewController.swift; sourceTree = "<group>"; };
 		466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46E661D0218A6F6700B173FB /* FeederViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeederViewController.swift; sourceTree = "<group>"; };
 		4DD687EA56289F13B3FF3CF3 /* Pods-PetStation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetStation.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetStation/Pods-PetStation.release.xcconfig"; sourceTree = "<group>"; };
@@ -122,22 +124,23 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
+				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
+				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
 				02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */,
 				02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */,
 				02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */,
-				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
-				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
-				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
+				02FD3C9421947C060042FEEE /* AboutViewController.swift */,
 				027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */,
-				027AE6A9218D75E9002C6BD9 /* Pet.swift */,
 				026EEB90218C305100A109C8 /* ProfileTableViewController.swift */,
+				027AE6A9218D75E9002C6BD9 /* Pet.swift */,
+				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				026EEB96218D32A600A109C8 /* PhotoViewController.swift */,
 				027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */,
 				026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */,
 				026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */,
+				0244502221808F2200A1CEE3 /* PlayViewController.swift */,
 				0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */,
 				0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */,
-				0244502221808F2200A1CEE3 /* PlayViewController.swift */,
 				46E661D0218A6F6700B173FB /* FeederViewController.swift */,
 				027AE6BD218F0565002C6BD9 /* StatisticsViewController.swift */,
 				02AA7E47217D4FC4007E5DEF /* Assets.xcassets */,
@@ -344,6 +347,7 @@
 				027AE6A8218D7049002C6BD9 /* NameTableViewController.swift in Sources */,
 				026EEB91218C305100A109C8 /* ProfileTableViewController.swift in Sources */,
 				0249BBAB2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift in Sources */,
+				02FD3C9521947C060042FEEE /* AboutViewController.swift in Sources */,
 				026EEB97218D32A600A109C8 /* PhotoViewController.swift in Sources */,
 				027AE6BE218F0565002C6BD9 /* StatisticsViewController.swift in Sources */,
 				0244502321808F2200A1CEE3 /* PlayViewController.swift in Sources */,
