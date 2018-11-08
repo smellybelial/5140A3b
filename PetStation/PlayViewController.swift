@@ -76,6 +76,17 @@ class PlayViewController: UIViewController {
         return uid
     }
     
+    override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
+        super.viewWillTransition(to: size, with: coordinator)
+        if UIDevice.current.orientation.isLandscape {
+            self.navigationController?.setNavigationBarHidden(true, animated: true)
+            self.tabBarController?.tabBar.isHidden = true
+        } else {
+            self.navigationController?.setNavigationBarHidden(false, animated: true)
+            self.tabBarController?.tabBar.isHidden = false
+        }
+    }
+    
 //    @IBAction func play(_ sender: UIButton) {
 //        if sender.titleLabel?.text == "Pause" {
 //            sender.setTitle("Play", for: UIControl.State.normal)

@@ -450,8 +450,8 @@
                                 <rect key="frame" x="10" y="124" width="355" height="474"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <segmentedControl opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pHb-G7-rJu">
-                                <rect key="frame" x="186" y="74" width="179" height="29"/>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="pHb-G7-rJu">
+                                <rect key="frame" x="204" y="74" width="161" height="29"/>
                                 <segments>
                                     <segment title="Day"/>
                                     <segment title="Week"/>
@@ -465,6 +465,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="Tvw-zn-zqy" firstAttribute="leading" secondItem="4Qy-ec-jbC" secondAttribute="leading" constant="10" id="0WK-Fd-xck"/>
+                            <constraint firstItem="pHb-G7-rJu" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="Tvw-zn-zqy" secondAttribute="trailing" constant="8" symbolic="YES" id="Ob4-s7-MMQ"/>
                             <constraint firstItem="28l-w2-nfc" firstAttribute="leading" secondItem="4Qy-ec-jbC" secondAttribute="leading" constant="10" id="QHy-HZ-098"/>
                             <constraint firstItem="4Qy-ec-jbC" firstAttribute="trailing" secondItem="pHb-G7-rJu" secondAttribute="trailing" constant="10" id="R4d-Tq-mCi"/>
                             <constraint firstItem="28l-w2-nfc" firstAttribute="top" secondItem="Tvw-zn-zqy" secondAttribute="bottom" constant="20" id="SQc-3e-zev"/>
@@ -502,7 +503,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="MaP-Gn-cmO">
-                                <rect key="frame" x="16" y="162" width="343" height="29"/>
+                                <rect key="frame" x="92" y="162" width="191" height="29"/>
                                 <segments>
                                     <segment title="1/4 CUP"/>
                                     <segment title="1/3 CUP"/>
@@ -528,13 +529,13 @@
                             <constraint firstItem="MaP-Gn-cmO" firstAttribute="top" secondItem="h6y-sT-iLc" secondAttribute="bottom" constant="23" id="0dA-Pf-cMf"/>
                             <constraint firstItem="Mn5-tN-kuu" firstAttribute="centerY" secondItem="hHw-IA-XpK" secondAttribute="centerY" id="1GI-AQ-vnZ"/>
                             <constraint firstItem="Mn5-tN-kuu" firstAttribute="leading" secondItem="e8V-PK-1nK" secondAttribute="leading" id="9BQ-Gg-zfv"/>
-                            <constraint firstItem="MaP-Gn-cmO" firstAttribute="leading" secondItem="h6y-sT-iLc" secondAttribute="leading" id="HaF-iX-QLt"/>
                             <constraint firstItem="h6y-sT-iLc" firstAttribute="leading" secondItem="hHw-IA-XpK" secondAttribute="leadingMargin" id="JU6-rm-Qwm"/>
                             <constraint firstItem="h6y-sT-iLc" firstAttribute="top" secondItem="e8V-PK-1nK" secondAttribute="top" constant="54" id="MUv-vN-Wcp"/>
                             <constraint firstItem="1IH-fc-GcO" firstAttribute="top" secondItem="MaP-Gn-cmO" secondAttribute="bottom" constant="61" id="NjN-kQ-BWM"/>
+                            <constraint firstItem="MaP-Gn-cmO" firstAttribute="centerX" secondItem="hHw-IA-XpK" secondAttribute="centerX" id="Vl1-Oq-M7f"/>
                             <constraint firstItem="Mn5-tN-kuu" firstAttribute="trailing" secondItem="e8V-PK-1nK" secondAttribute="trailing" id="gZU-Ge-iqk"/>
                             <constraint firstItem="1IH-fc-GcO" firstAttribute="centerX" secondItem="MaP-Gn-cmO" secondAttribute="centerX" constant="-0.5" id="lZN-en-qIH"/>
-                            <constraint firstItem="MaP-Gn-cmO" firstAttribute="trailing" secondItem="hHw-IA-XpK" secondAttribute="trailingMargin" id="nga-jh-tvd"/>
+                            <constraint firstItem="e8V-PK-1nK" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="h6y-sT-iLc" secondAttribute="trailing" symbolic="YES" id="laq-h0-9t5"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="e8V-PK-1nK"/>
                     </view>
@@ -616,9 +617,8 @@
                                     <action selector="stopRight:" destination="IbE-b8-7Xd" eventType="touchUpInside" id="ndg-Mv-wht"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZp-aF-fZM">
-                                <rect key="frame" x="100" y="291" width="175" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" selected="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="kZp-aF-fZM">
+                                <rect key="frame" x="100" y="295" width="175" height="30"/>
                                 <state key="normal" title="Change Youtube Account"/>
                                 <connections>
                                     <segue destination="YSN-A8-5Gk" kind="show" identifier="YoutubeAccountSegue" id="VDC-Tv-Iez"/>
@@ -628,12 +628,14 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
                             <constraint firstItem="jxc-Fb-cUs" firstAttribute="leading" secondItem="1ox-h2-qdt" secondAttribute="leading" id="1Db-UV-6YF"/>
+                            <constraint firstItem="kZp-aF-fZM" firstAttribute="centerX" secondItem="3Vt-2S-xKF" secondAttribute="centerX" id="4Bd-Wu-vOo"/>
                             <constraint firstItem="7IJ-EW-Tmo" firstAttribute="leading" secondItem="7kM-FY-pNj" secondAttribute="trailing" id="H9a-Wi-4sl"/>
                             <constraint firstItem="FxD-iz-yz3" firstAttribute="leading" secondItem="7IJ-EW-Tmo" secondAttribute="trailing" id="HKs-Qi-ogf"/>
                             <constraint firstItem="7kM-FY-pNj" firstAttribute="top" secondItem="7IJ-EW-Tmo" secondAttribute="bottom" constant="-7" id="P9t-lQ-okJ"/>
                             <constraint firstItem="p7K-1s-61b" firstAttribute="centerX" secondItem="3Vt-2S-xKF" secondAttribute="centerX" id="Pul-iF-RYr"/>
                             <constraint firstItem="p7K-1s-61b" firstAttribute="bottom" secondItem="1ox-h2-qdt" secondAttribute="bottom" constant="-10" id="eNb-F5-cfj"/>
                             <constraint firstItem="p7K-1s-61b" firstAttribute="top" secondItem="7IJ-EW-Tmo" secondAttribute="bottom" constant="50" id="eWB-4C-HQj"/>
+                            <constraint firstItem="kZp-aF-fZM" firstAttribute="top" secondItem="jxc-Fb-cUs" secondAttribute="bottom" constant="20" id="gQh-Dy-kNQ"/>
                             <constraint firstItem="jxc-Fb-cUs" firstAttribute="top" secondItem="1ox-h2-qdt" secondAttribute="top" id="jpG-yX-GPf"/>
                             <constraint firstItem="1ox-h2-qdt" firstAttribute="trailing" secondItem="jxc-Fb-cUs" secondAttribute="trailing" id="vAK-3O-bQf"/>
                             <constraint firstItem="7IJ-EW-Tmo" firstAttribute="centerX" secondItem="3Vt-2S-xKF" secondAttribute="centerX" id="vma-Iz-2Av"/>
@@ -649,7 +651,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bRR-V0-BHN" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3681" y="134"/>
+            <point key="canvasLocation" x="3680.8000000000002" y="133.5832083958021"/>
         </scene>
         <!--Home-->
         <scene sceneID="iGo-rM-Ujw">
