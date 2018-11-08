@@ -14,6 +14,8 @@
 		0244501F218081AC00A1CEE3 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0244501E218081AC00A1CEE3 /* CoreData.framework */; };
 		0244502321808F2200A1CEE3 /* PlayViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0244502221808F2200A1CEE3 /* PlayViewController.swift */; };
 		024450272180AA6E00A1CEE3 /* YouTubePlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 024450262180AA6E00A1CEE3 /* YouTubePlayer.framework */; };
+		0249BBAB2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */; };
+		0249BBAD2193B93E00E762B1 /* YoutubeAccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */; };
 		026EEB91218C305100A109C8 /* ProfileTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB90218C305100A109C8 /* ProfileTableViewController.swift */; };
 		026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */; };
 		026EEB95218D2B0000A109C8 /* WeightTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */; };
@@ -45,6 +47,8 @@
 		0244502221808F2200A1CEE3 /* PlayViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayViewController.swift; sourceTree = "<group>"; };
 		024450242180A85500A1CEE3 /* YouTubePlayer_Swift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YouTubePlayer_Swift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		024450262180AA6E00A1CEE3 /* YouTubePlayer.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = YouTubePlayer.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeAccountTableViewCell.swift; sourceTree = "<group>"; };
+		0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YoutubeAccountTableViewController.swift; sourceTree = "<group>"; };
 		026EEB90218C305100A109C8 /* ProfileTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileTableViewController.swift; sourceTree = "<group>"; };
 		026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenderTableViewController.swift; sourceTree = "<group>"; };
 		026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeightTableViewController.swift; sourceTree = "<group>"; };
@@ -114,6 +118,8 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
+				0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */,
+				0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */,
 				027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */,
 				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
@@ -331,12 +337,14 @@
 			files = (
 				027AE6A8218D7049002C6BD9 /* NameTableViewController.swift in Sources */,
 				026EEB91218C305100A109C8 /* ProfileTableViewController.swift in Sources */,
+				0249BBAB2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift in Sources */,
 				026EEB97218D32A600A109C8 /* PhotoViewController.swift in Sources */,
 				027AE6BE218F0565002C6BD9 /* StatisticsViewController.swift in Sources */,
 				0244502321808F2200A1CEE3 /* PlayViewController.swift in Sources */,
 				46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */,
 				027AE6AE218E7D4E002C6BD9 /* HomeViewController.swift in Sources */,
 				02AA7E46217D4FC2007E5DEF /* PetStation.xcdatamodeld in Sources */,
+				0249BBAD2193B93E00E762B1 /* YoutubeAccountTableViewController.swift in Sources */,
 				02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */,
 				027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */,
 				02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */,

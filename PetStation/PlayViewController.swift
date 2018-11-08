@@ -57,7 +57,7 @@ class PlayViewController: UIViewController {
             return
         }
         
-        self.databaseRef.child(uid).child("toy/streamVideoID").observe(.value) { (snapshot) in
+        self.databaseRef.child(uid).child("toy/videoID").observe(.value) { (snapshot) in
             guard let value = snapshot.value as? String else {
                 return
             }
@@ -76,15 +76,15 @@ class PlayViewController: UIViewController {
         return uid
     }
     
-    @IBAction func play(_ sender: UIButton) {
-        if sender.titleLabel?.text == "Pause" {
-            sender.setTitle("Play", for: UIControl.State.normal)
-            self.videoView.pause()
-        } else {
-            sender.setTitle("Pause", for: UIControl.State.normal)
-            self.videoView.play()
-        }
-    }
+//    @IBAction func play(_ sender: UIButton) {
+//        if sender.titleLabel?.text == "Pause" {
+//            sender.setTitle("Play", for: UIControl.State.normal)
+//            self.videoView.pause()
+//        } else {
+//            sender.setTitle("Pause", for: UIControl.State.normal)
+//            self.videoView.play()
+//        }
+//    }
 
     // touch down UP button to move forward
     @IBAction func up(_ sender: UIButton) {
