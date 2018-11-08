@@ -24,7 +24,6 @@
 		027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6A9218D75E9002C6BD9 /* Pet.swift */; };
 		027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */; };
 		027AE6AE218E7D4E002C6BD9 /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */; };
-		027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */; };
 		027AE6BE218F0565002C6BD9 /* StatisticsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027AE6BD218F0565002C6BD9 /* StatisticsViewController.swift */; };
 		02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */; };
 		02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */; };
@@ -33,6 +32,9 @@
 		02AA7E48217D4FC4007E5DEF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02AA7E47217D4FC4007E5DEF /* Assets.xcassets */; };
 		02AA7E4B217D4FC4007E5DEF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 02AA7E49217D4FC4007E5DEF /* LaunchScreen.storyboard */; };
 		02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FAF8F6218162BC0085EE81 /* TabBarController.swift */; };
+		02FD3C8F2193FEB90042FEEE /* PasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */; };
+		02FD3C912193FFDA0042FEEE /* PasswordTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */; };
+		02FD3C9321940EB10042FEEE /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */; };
 		1A47C719441073F22D339814 /* Pods_PetStation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EDB2F336B0972304CBC4672B /* Pods_PetStation.framework */; };
 		466AA4EE218C001B00FAE591 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */; };
 		46E661D1218A6F6700B173FB /* FeederViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46E661D0218A6F6700B173FB /* FeederViewController.swift */; };
@@ -57,7 +59,6 @@
 		027AE6A9218D75E9002C6BD9 /* Pet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pet.swift; sourceTree = "<group>"; };
 		027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoTableViewCell.swift; sourceTree = "<group>"; };
 		027AE6AD218E7D4E002C6BD9 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
-		027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 		027AE6B6218EF97B002C6BD9 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		027AE6BD218F0565002C6BD9 /* StatisticsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticsViewController.swift; sourceTree = "<group>"; };
 		02AA7E3A217D4FC2007E5DEF /* PetStation.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PetStation.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +70,9 @@
 		02AA7E4A217D4FC4007E5DEF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		02AA7E4C217D4FC4007E5DEF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		02FAF8F6218162BC0085EE81 /* TabBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarController.swift; sourceTree = "<group>"; };
+		02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableViewCell.swift; sourceTree = "<group>"; };
+		02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordTableViewController.swift; sourceTree = "<group>"; };
+		02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		466AA4ED218C001A00FAE591 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		46E661D0218A6F6700B173FB /* FeederViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeederViewController.swift; sourceTree = "<group>"; };
 		4DD687EA56289F13B3FF3CF3 /* Pods-PetStation.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-PetStation.release.xcconfig"; path = "Pods/Target Support Files/Pods-PetStation/Pods-PetStation.release.xcconfig"; sourceTree = "<group>"; };
@@ -118,7 +122,9 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
-				027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */,
+				02FD3C9221940EB10042FEEE /* SettingsTableViewController.swift */,
+				02FD3C8E2193FEB90042FEEE /* PasswordTableViewCell.swift */,
+				02FD3C902193FFDA0042FEEE /* PasswordTableViewController.swift */,
 				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
 				02FAF8F6218162BC0085EE81 /* TabBarController.swift */,
@@ -346,13 +352,15 @@
 				02AA7E46217D4FC2007E5DEF /* PetStation.xcdatamodeld in Sources */,
 				0249BBAD2193B93E00E762B1 /* YoutubeAccountTableViewController.swift in Sources */,
 				02AA7E40217D4FC2007E5DEF /* AuthViewController.swift in Sources */,
-				027AE6B0218E7DCE002C6BD9 /* SettingsViewController.swift in Sources */,
 				02FAF8F7218162BC0085EE81 /* TabBarController.swift in Sources */,
 				026EEB93218D21AB00A109C8 /* GenderTableViewController.swift in Sources */,
+				02FD3C912193FFDA0042FEEE /* PasswordTableViewController.swift in Sources */,
 				027AE6AA218D75E9002C6BD9 /* Pet.swift in Sources */,
+				02FD3C8F2193FEB90042FEEE /* PasswordTableViewCell.swift in Sources */,
 				027AE6AC218DA8DB002C6BD9 /* PhotoTableViewCell.swift in Sources */,
 				02AA7E3E217D4FC2007E5DEF /* AppDelegate.swift in Sources */,
 				026EEB95218D2B0000A109C8 /* WeightTableViewController.swift in Sources */,
+				02FD3C9321940EB10042FEEE /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

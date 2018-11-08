@@ -87,7 +87,7 @@ class PlayViewController: UIViewController {
         }
     }
     
-//    @IBAction func play(_ sender: UIButton) {
+//    @IBAction func reload(_ sender: UIButton) {
 //        if sender.titleLabel?.text == "Pause" {
 //            sender.setTitle("Play", for: UIControl.State.normal)
 //            self.videoView.pause()
@@ -96,6 +96,10 @@ class PlayViewController: UIViewController {
 //            self.videoView.play()
 //        }
 //    }
+    
+    @IBAction func reloadVideo(_ sender: Any) {
+        self.videoView.loadVideoID(self.videoID)
+    }
 
     // touch down UP button to move forward
     @IBAction func up(_ sender: UIButton) {

@@ -13,6 +13,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
+    @IBOutlet weak var busy: UIActivityIndicatorView!
     
     var handle: AuthStateDidChangeListenerHandle?
     
@@ -70,6 +71,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             return
         }
 
+        self.busy.startAnimating()
         Auth.auth().createUser(withEmail: email, password: password) { (user, error) in
             if error != nil {
                 self.displayErrorMessage(error!.localizedDescription)
@@ -92,6 +94,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
                         "videoKey": ""
                     ]
                 ])
+            self.busy.stopAnimating()
         }
     }
 
@@ -105,10 +108,12 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             return
         }
         
+        self.busy.startAnimating()
         Auth.auth().signIn(withEmail: email, password: password) { (user, error) in
             if error != nil {
                 self.displayErrorMessage(error!.localizedDescription)
             }
+            self.busy.stopAnimating()
         }
     }
 
