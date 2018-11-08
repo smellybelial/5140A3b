@@ -77,7 +77,7 @@ class YoutubeAccountTableViewController: UITableViewController {
     
     func updateValues() {
         let videoIDCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! YoutubeAccountTableViewCell
-        let streamKeyCell = self.tableView.cellForRow(at: IndexPath(row: 1, section: 0)) as! YoutubeAccountTableViewCell
+        let streamKeyCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! YoutubeAccountTableViewCell
         self.videoID = videoIDCell.inputTextField.text
         self.streamKey = streamKeyCell.inputTextField.text
     }
@@ -87,31 +87,25 @@ class YoutubeAccountTableViewController: UITableViewController {
 
     override func numberOfSections(in tableView: UITableView) -> Int {
         // #warning Incomplete implementation, return the number of sections
-        return 1
+        return 2
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 2
+        return 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "YoutubeAccountCell", for: indexPath) as! YoutubeAccountTableViewCell
         // Configure the cell...
-        switch indexPath.row {
+        switch indexPath.section {
         case 0:
-//            cell.inputTextField.placeholder = "VideoID, example: tvw6nOEMYL4"
-            cell.inputTextField.text = "Hello"
-            if let videoID = self.videoID {
-                cell.inputTextField.text = videoID
-            }
+            cell.inputTextField.placeholder = "Example: tvw6nOEMYL4"
+            cell.inputTextField.text = self.videoID
         case 1:
-//            cell.inputTextField.placeholder = "StreamKey example: wyee-v0kz-5yzj-c54u"
-            cell.inputTextField.text = "How is it going?"
-            if let streamKey = self.streamKey {
-                cell.inputTextField.text = streamKey
-            }
+            cell.inputTextField.placeholder = "Example: wyee-v0kz-5yzj-c54u"
+            cell.inputTextField.text = self.streamKey
         default:
             break
         }
@@ -119,6 +113,13 @@ class YoutubeAccountTableViewController: UITableViewController {
         return cell
     }
     
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        if section == 0 {
+            return "Youtube Video ID"
+        } else {
+            return "Stream Key"
+        }
+    }
 
     /*
     // Override to support conditional editing of the table view.
