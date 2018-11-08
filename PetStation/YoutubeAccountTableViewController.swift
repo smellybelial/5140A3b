@@ -13,7 +13,7 @@ class YoutubeAccountTableViewController: UITableViewController {
     
     let databaseRef: DatabaseReference = Database.database().reference().child("petstation/users")
     var videoID: String?
-    var streamKey: String?
+    var videoKey: String?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,12 +39,12 @@ class YoutubeAccountTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
-        databaseRef.child(uid).child("toy/streamKey").observeSingleEvent(of: .value) { (snapshot) in
+        databaseRef.child(uid).child("toy/videoKey").observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value as? String else {
                 return
             }
             
-            self.streamKey = value
+            self.videoKey = value
             self.tableView.reloadData()
         }
     }
@@ -56,8 +56,8 @@ class YoutubeAccountTableViewController: UITableViewController {
             return
         }
         
-        if let videoID = self.videoID, let streamKey = self.streamKey, videoID != "", streamKey != "" {
-            databaseRef.child(uid).child("toy").updateChildValues(["videoID": videoID, "streamKey": streamKey])
+        if let videoID = self.videoID, let streamKey = self.videoKey, videoID != "", streamKey != "" {
+            databaseRef.child(uid).child("toy").updateChildValues(["videoID": videoID, "videoKey": streamKey])
             let alertController = UIAlertController(title: "Success", message: "videoID and streamKey changed.", preferredStyle: .alert)
             self.present(alertController, animated: true, completion: {
                 let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
@@ -77,9 +77,9 @@ class YoutubeAccountTableViewController: UITableViewController {
     
     func updateValues() {
         let videoIDCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! YoutubeAccountTableViewCell
-        let streamKeyCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! YoutubeAccountTableViewCell
+        let videoKeyCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! YoutubeAccountTableViewCell
         self.videoID = videoIDCell.inputTextField.text
-        self.streamKey = streamKeyCell.inputTextField.text
+        self.videoKey = videoKeyCell.inputTextField.text
     }
 
 
@@ -105,7 +105,7 @@ class YoutubeAccountTableViewController: UITableViewController {
             cell.inputTextField.text = self.videoID
         case 1:
             cell.inputTextField.placeholder = "Example: wyee-v0kz-5yzj-c54u"
-            cell.inputTextField.text = self.streamKey
+            cell.inputTextField.text = self.videoKey
         default:
             break
         }

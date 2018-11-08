@@ -89,7 +89,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
                         "action": 0,
                         "cameraSwitch": "OFF",
                         "videoID": "tvw6nOEMYL4", //TODO: need to change
-                        "streamKey": ""
+                        "videoKey": ""
                     ]
                 ])
         }

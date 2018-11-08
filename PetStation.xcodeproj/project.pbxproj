@@ -118,8 +118,6 @@
 			children = (
 				02AA7E3D217D4FC2007E5DEF /* AppDelegate.swift */,
 				02AA7E41217D4FC2007E5DEF /* Main.storyboard */,
-				0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */,
-				0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */,
 				027AE6AF218E7DCE002C6BD9 /* SettingsViewController.swift */,
 				027AE6AB218DA8DB002C6BD9 /* PhotoTableViewCell.swift */,
 				02AA7E3F217D4FC2007E5DEF /* AuthViewController.swift */,
@@ -131,6 +129,8 @@
 				027AE6A7218D7049002C6BD9 /* NameTableViewController.swift */,
 				026EEB94218D2B0000A109C8 /* WeightTableViewController.swift */,
 				026EEB92218D21AB00A109C8 /* GenderTableViewController.swift */,
+				0249BBAA2193B7B400E762B1 /* YoutubeAccountTableViewCell.swift */,
+				0249BBAC2193B93E00E762B1 /* YoutubeAccountTableViewController.swift */,
 				0244502221808F2200A1CEE3 /* PlayViewController.swift */,
 				46E661D0218A6F6700B173FB /* FeederViewController.swift */,
 				027AE6BD218F0565002C6BD9 /* StatisticsViewController.swift */,
