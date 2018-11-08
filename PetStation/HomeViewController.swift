@@ -24,7 +24,10 @@ class HomeViewController: UIViewController {
 
         self.datetimeTextField.text = "Today is \(self.toString(date: Date(), format: "EEEE, dd/MMM/yyyy, HH:mm"))"
         
+        // get the hour of the current time
         let hour = Calendar.current.component(.hour, from: Date())
+        
+        // set a string according to current hour
         var period = ""
         if hour < 12 {
             period = "morning"
@@ -38,6 +41,7 @@ class HomeViewController: UIViewController {
     
     }
     
+    // convert a date into a string with a specified format
     func toString(date: Date, format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format

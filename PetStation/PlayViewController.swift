@@ -28,8 +28,9 @@ class PlayViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         // Do any additional setup after loading the view.
+        
+        // set video view play mode as inline
         self.videoView.playerVars = ["playsinline":1] as YouTubePlayerView.YouTubePlayerParameters
         self.loadVideo()
         
@@ -37,6 +38,8 @@ class PlayViewController: UIViewController {
         guard let uid = getCurrentUserID() else {
             return
         }
+        
+        // make sure when the app disconnect with network unintentionally, the camera is switched off
         self.databaseRef.child(uid).child("toy/cameraSwitch").onDisconnectSetValue(CameraSwitch.OFF.rawValue)
     }
     
@@ -76,6 +79,7 @@ class PlayViewController: UIViewController {
         return uid
     }
     
+    // when device's orientation changes to landscape, hide navigation bar and tab bar
     override func viewWillTransition(to size: CGSize, with coordinator: UIViewControllerTransitionCoordinator) {
         super.viewWillTransition(to: size, with: coordinator)
         if UIDevice.current.orientation.isLandscape {
@@ -86,16 +90,6 @@ class PlayViewController: UIViewController {
             self.tabBarController?.tabBar.isHidden = false
         }
     }
-    
-//    @IBAction func reload(_ sender: UIButton) {
-//        if sender.titleLabel?.text == "Pause" {
-//            sender.setTitle("Play", for: UIControl.State.normal)
-//            self.videoView.pause()
-//        } else {
-//            sender.setTitle("Pause", for: UIControl.State.normal)
-//            self.videoView.play()
-//        }
-//    }
     
     @IBAction func reloadVideo(_ sender: Any) {
         self.videoView.loadVideoID(self.videoID)

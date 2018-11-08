@@ -48,51 +48,51 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     
     // MARK: - Date formatting
     
-    /**
-     It converts a date to a String according to the date format
-     
-     - Parameters:
-        - date: the date being converted
-        - format: the date format
-     
-     - Returns: a formatted date string
-     */
+    
+    // converts a date to a String according to the date format
     func toString(date: Date, format: String) -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.string(from: date)
     }
     
+    // convert a string to a date according to the date format
     func toDate(dateString: String, format: String) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
         return dateFormatter.date(from: dateString)
     }
     
+    // round a date to the beginning of the day
     func roundingToDay(date: Date) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return dateFormatter.date(from: dateFormatter.string(from: date))
     }
     
+    // round a date in the form of time interval to the beginning of the day in the form of time interval
     func roundingToDay(_ timeIntervalSince1970: TimeInterval) -> TimeInterval {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         return (dateFormatter.date(from: dateFormatter.string(from: Date(timeIntervalSince1970: timeIntervalSince1970)))?.timeIntervalSince1970)!
     }
     
+    // round a date the 1st day of its month
     func roundingTo1stDayOfMonth(date: Date) -> Date? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM"
         return dateFormatter.date(from: dateFormatter.string(from: date))
     }
     
+    // get the date range of one day (in terms of time intervals), which contains the current date
+    // e.g. 11/02/2018 09:01 is contained in the range of 11/02/2018 00:00 - 12/02/2018 00:00
     func getDateRangeOfOneDayContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
         let from = roundingToDay(date: date)!
         let to = Calendar.current.date(byAdding: .day, value: 1, to: from)!
         return (from.timeIntervalSince1970, to.timeIntervalSince1970)
     }
     
+    // get the date range of one week (in terms of time intervals), which contains the current date
     func getDateRangeOfOneWeekContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
         let aDate = roundingToDay(date: date)!
         let weekday = Calendar.current.component(.weekday, from: aDate)
@@ -101,6 +101,8 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
         return (from.timeIntervalSince1970, to.timeIntervalSince1970)
     }
     
+    // get the date range of one day (in terms of time intervals), which contains the current date
+    // e.g. 11/02/2018 09:01 is contained in the range of 01/02/2018 00:00 - 01/03/2018 00:00
     func getDateRangeOfOneMonthContaining(date: Date) -> (from: TimeInterval, to: TimeInterval) {
         let from = roundingTo1stDayOfMonth(date: date)!
         let to = Calendar.current.date(byAdding: .month, value: 1, to: from)
@@ -152,53 +154,11 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     
     @objc func dateChanged(datepicker: UIDatePicker) {
         dateTextField.text = toString(date: datepicker.date, format: "dd/MM/yyyy")
-//        switch self.selectedDisplayRange.selectedSegmentIndex {
-//        case 0:
-//            let dateRange = getDateRangeOfOneDayContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                self.drawChart(withDataset: dataset)
-//            }
-//        case 1:
-//            let dateRange = getDateRangeOfOneWeekContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                let groupedDataset = self.groupByDay(dataset: dataset)
-//                self.drawChart(withDataset: groupedDataset)
-//            }
-//        case 2:
-//            let dateRange = getDateRangeOfOneMonthContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                let groupedDataset = self.groupByDay(dataset: dataset)
-//                self.drawChart(withDataset: groupedDataset)
-//            }
-//        default:
-//            return
-//        }
         displayChart(date: datepicker.date, selectedDisplayRange: self.selectedDisplayRange.selectedSegmentIndex)
     }
     
     
     @IBAction func selectDisplayRange(_ sender: UISegmentedControl) {
-//        switch sender.selectedSegmentIndex {
-//        case 0:
-//            let dateRange = getDateRangeOfOneDayContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                self.drawChart(withDataset: dataset)
-//            }
-//        case 1:
-//            let dateRange = getDateRangeOfOneWeekContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                let groupedDataset = self.groupByDay(dataset: dataset)
-//                self.drawChart(withDataset: groupedDataset)
-//            }
-//        case 2:
-//            let dateRange = getDateRangeOfOneMonthContaining(date: (datePicker?.date)!)
-//            getFeedingHistory(dateRange: dateRange) { (dataset) in
-//                let groupedDataset = self.groupByDay(dataset: dataset)
-//                self.drawChart(withDataset: groupedDataset)
-//            }
-//        default:
-//            return
-//        }
         displayChart(date: (datePicker?.date)!, selectedDisplayRange: sender.selectedSegmentIndex)
     }
     
@@ -295,8 +255,6 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
     }
     
     func groupByDay(dataset: [(date: TimeInterval, amount: Double)]) -> [(TimeInterval, Double)] {
-        //        let aWeekAgo = Calendar.current.date(byAdding: .day, value: -7, to: (datePicker?.date)!)
-        //        getTemperatures(from: aWeekAgo!, to: (datePicker?.date)!)
         
         var dailyHistory: [(date: TimeInterval, temp: Double)] = []
         
@@ -326,7 +284,6 @@ class StatisticsViewController: UIViewController, IAxisValueFormatter {
             dataEntries.append(dataEntry)
         }
         let chartDataSet = BarChartDataSet(values: dataEntries, label: "Feeding Amount")
-//        chartDataSet.setColor(.blue)
         let chartData = BarChartData(dataSet: chartDataSet)
         
         // setting bar width

@@ -39,9 +39,9 @@ class FeederViewController: UIViewController {
         return uid
     }
     
-    func getLastFeed() {
-        
-    }
+//    func getLastFeed() {
+//
+//    }
     
     func setFeed(cup: Cup) {
         guard let uid = getCurrentUser() else {
@@ -56,16 +56,16 @@ class FeederViewController: UIViewController {
         
         switch (amountSegment.selectedSegmentIndex) {
         case 0 :
-            foodAmount = Cup.Quarter //3/12 //should rotate 3 times, each 90 degrees.
+            foodAmount = Cup.Quarter //3/12     rotate 3 times, each 90 degrees.
             break
         case 1 :
-            foodAmount = Cup.Third //4/12
+            foodAmount = Cup.Third //4/12       rotate 4 times, each 90 degrees.
             break
         case 2 :
-            foodAmount = Cup.Half //6/12
+            foodAmount = Cup.Half //6/12        rotate 6 times, each 90 degrees.
             break
         default:
-            foodAmount = Cup.Sixth //2/12 //rotate 2 times, each 90degrees.
+            foodAmount = Cup.Sixth //2/12       rotate 2 times, each 90 degrees.
             break
         }
         setFeed(cup: foodAmount)

@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  AuthViewController.swift
 //  PetStation
 //
 //  Created by Xiaotian LIU on 22/10/18.
@@ -61,6 +61,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
     
+    // Register a new account
     @IBAction func registerAccount(_ sender: Any) {
         guard let password = passwordTextField.text else {
             displayErrorMessage("Please enter a password")
@@ -80,6 +81,8 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
             guard let uid = user?.user.uid else {
                 return
             }
+            
+            // initialise the firebase database for the newly created user
             let databaseRef = Database.database().reference().child("petstation").child("users").child(uid)
             databaseRef.setValue([
                     "pet": [
@@ -98,6 +101,7 @@ class AuthViewController: UIViewController, UITextFieldDelegate {
         }
     }
 
+    // Sign in with email and password
     @IBAction func LoginAccount(_ sender: Any) {
         guard let password = passwordTextField.text else {
             displayErrorMessage("Please enter a password")

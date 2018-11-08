@@ -13,13 +13,16 @@ class TabBarController: UITabBarController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // Create a left BarButtonItem for logout
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.signout))
         
+        // Create a right BarButtonItem for going to settings page
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "icons8-settings-filled-50"), style: UIBarButtonItem.Style.plain, target: self, action: #selector(self.settings))
 
-        // Do any additional setup after loading the view.
     }
     
+    // Sign out
     @objc func signout() {
         do {
             try Auth.auth().signOut()
@@ -27,6 +30,7 @@ class TabBarController: UITabBarController {
         } catch {}
     }
     
+    // Go to settings page
     @objc func settings() {
         performSegue(withIdentifier: "SettingsSegue", sender: nil)
     }

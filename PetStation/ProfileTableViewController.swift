@@ -44,32 +44,40 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
 
         // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
         // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
+        // initialise a Pet object
         self.pet = Pet()
         
+        // get current user's id
         guard let uid = getCurrentUser() else {
             return
         }
         
+        // get the pet's information from firebase database
         self.databaseRef.child(uid).child("pet").observeSingleEvent(of: .value) { (snapshot) in
             guard let pet = snapshot.value as? NSDictionary else {
                 return
             }
             
-            // get pet name, gender, weight
+            // get pet's name, gender, and weight
             self.pet?.name = (pet["name"] as! String)
             self.pet?.gender = Gender(rawValue: pet["gender"] as! Int)!
             self.pet?.weight = (pet["weight"] as! Double)
             
+            // get the url (online path in firebase storage) of pet's photo
             guard let url = pet["photopath"] as? String else {
+                // if there is no url, simply set the displayed photo using default photo
                 self.photo = self.defaultPhoto
                 self.tableView.reloadData()
                 return
             }
-            
             self.url = url
-            let fileName = pet["filepath"] as? String ?? ""
             
-            if fileName != "", self.localFileExists(fileName: fileName) {
+            // get local file name for pet's photo
+            let fileName = pet["filepath"] as! String
+            
+            // if the local file exists, load it locally; otherwise, load it from firebase, then save it locally
+            if self.localFileExists(fileName: fileName) {
                 if let image = self.loadImageData(fileName: fileName) {
                     self.photo = image
                     self.tableView.reloadData()
@@ -89,6 +97,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         }
     }
     
+    // check if there exits a local file with specified name
     func localFileExists(fileName: String) -> Bool {
         var localFileExists = false
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
@@ -102,6 +111,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         return localFileExists
     }
     
+    // load image data of a file with specified file name
     func loadImageData(fileName: String) -> UIImage? {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
@@ -116,6 +126,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         return image
     }
     
+    // save image data to a local file with a specified file name
     func saveLocalData(fileName: String, imageData: Data) {
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
@@ -126,6 +137,7 @@ class ProfileTableViewController: UITableViewController, NameDelegate, GenderDel
         }
     }
     
+    // get current user's ID
     func getCurrentUser() -> String? {
         guard let uid = Auth.auth().currentUser?.uid else {
             displayErrorMessage("No user found")

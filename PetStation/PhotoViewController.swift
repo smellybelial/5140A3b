@@ -30,9 +30,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             self.photoView.image = photo
         } else {
             self.busy.startAnimating()
-//            photoDelegate
         }
-        
     }
     
 
@@ -46,6 +44,7 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     */
     
+    // dismiss the actionSheet when touching the screen
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         if let actionSheet = self.actionSheet {
             actionSheet.dismiss(animated: true, completion: nil)
@@ -53,14 +52,23 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
     }
     
     @objc func displayOptions() {
+        // create an actionSheet
         self.actionSheet = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        
+        // add a Take Photo option
         self.actionSheet!.addAction(UIAlertAction(title: "Take Photo", style: .default, handler: { (_) in
             self.takePhoto()
         }))
+        
+        // add a Choose from Album option
         self.actionSheet!.addAction(UIAlertAction(title: "Choose from Album", style: .default, handler: { (_) in
             self.chooseFromAlum()
         }))
+        
+        // add a Cancel option
         self.actionSheet!.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        // display the actionSheet
         self.present(self.actionSheet!, animated: true, completion: nil)
     }
     
@@ -85,8 +93,6 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
         controller.delegate = self
         self.present(controller, animated: true, completion: nil)
     }
-    
-    
     
     func savePhoto(_ pickedImage: UIImage?) {
         guard let image = pickedImage else {
@@ -128,7 +134,10 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
                     self.photoView.image = image
                     self.busy.stopAnimating()
                     
+                    // create a success message
                     let alertController = UIAlertController(title: "Success", message: "Image saved to Firebase", preferredStyle: UIAlertController.Style.alert)
+                    
+                    // display it for 1 second
                     self.present(alertController, animated: true, completion: {
                         let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
                             alertController.dismiss(animated: true, completion: nil)
@@ -138,15 +147,16 @@ class PhotoViewController: UIViewController, UIImagePickerControllerDelegate, UI
             }
         }
         
+        // save the image to a local file
         let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
         let url = NSURL(fileURLWithPath: path)
-        
         if let pathComponent = url.appendingPathComponent("\(date)") {
             let filePath = pathComponent.path
             let fileManager = FileManager.default
             fileManager.createFile(atPath: filePath, contents: data, attributes: nil)
         }
         
+        // update photo for previous page
         self.photoDelegate.updatePhoto("\(date)")
     }
     

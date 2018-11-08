@@ -25,11 +25,12 @@ class YoutubeAccountTableViewController: UITableViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
         
-        // Load videoID and streamKey
+        // Get user id
         guard let uid = Auth.auth().currentUser?.uid else {
             return
         }
         
+        // load video ID
         databaseRef.child(uid).child("toy/videoID").observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value as? String else {
                 return
@@ -39,6 +40,7 @@ class YoutubeAccountTableViewController: UITableViewController {
             self.tableView.reloadData()
         }
         
+        // load video key
         databaseRef.child(uid).child("toy/videoKey").observeSingleEvent(of: .value) { (snapshot) in
             guard let value = snapshot.value as? String else {
                 return
@@ -56,8 +58,12 @@ class YoutubeAccountTableViewController: UITableViewController {
             return
         }
         
+        // make sure user-entered videoID and videoKey is not empty
         if let videoID = self.videoID, let streamKey = self.videoKey, videoID != "", streamKey != "" {
+            // update values for videoID and videoKey
             databaseRef.child(uid).child("toy").updateChildValues(["videoID": videoID, "videoKey": streamKey])
+            
+            // create a success messge, then display it for 1 second
             let alertController = UIAlertController(title: "Success", message: "videoID and streamKey changed.", preferredStyle: .alert)
             self.present(alertController, animated: true, completion: {
                 let _ = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: false, block: { (_) in
@@ -65,6 +71,7 @@ class YoutubeAccountTableViewController: UITableViewController {
                 })
             })
         } else {
+            // display an error message
             let alertController = UIAlertController(title: "Error", message: "VideoID and StreamKey cannot be empty", preferredStyle: .alert)
             alertController.addAction(UIAlertAction(title: "Dismiss", style: .default, handler: nil))
             self.present(alertController, animated: true, completion: nil)

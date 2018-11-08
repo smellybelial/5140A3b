@@ -19,24 +19,33 @@ class PasswordTableViewController: UITableViewController {
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
 
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
+        // Creat left and right BarButtonItems: left cancel, right done
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(self.done))
         self.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(self.cancel))
     }
     
     @objc func done() {
+        // Hide keyboard
         self.view.endEditing(true)
+        
+        // Get the cells
         let oldPasswordCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 0)) as! PasswordTableViewCell
         let newPasswordCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 1)) as! PasswordTableViewCell
         let newPasswordAgainCell = self.tableView.cellForRow(at: IndexPath(row: 0, section: 2)) as! PasswordTableViewCell
+        
+        // Get the passwords from the cells
         let oldPassword = oldPasswordCell.passwordTextField.text
         let newPassword = newPasswordCell.passwordTextField.text
         let newPasswordAgain = newPasswordAgainCell.passwordTextField.text
         
+        // create an credential with current user's email and the user-entered old password
         let email = Auth.auth().currentUser?.email
         let credential = EmailAuthProvider.credential(withEmail: email!, password: oldPassword!)
         
+        // start an activity indicator before getting into an asynchronous task
         self.busy.startAnimating()
+        
+        // reauthenticate with credential
         Auth.auth().currentUser?.reauthenticateAndRetrieveData(with: credential, completion: { (result, error) in
             if error != nil {
                 self.busy.stopAnimating()
@@ -44,30 +53,40 @@ class PasswordTableViewController: UITableViewController {
                 return
             }
             
+            // make sure new password is different from old one
             guard oldPassword != newPassword else {
                 self.busy.stopAnimating()
                 self.displayMessage("New password is identical with the old one", "Error")
                 return
             }
+            
+            // make sure new password and re-entered new password are not empty
             guard newPassword != "", newPasswordAgain != "" else {
                 self.busy.stopAnimating()
                 self.displayMessage("password should not be empty", "Error")
                 return
             }
             
+            // make sure re-entered password is identical to the new password first entered
             guard newPassword == newPasswordAgain else {
                 self.busy.stopAnimating()
                 self.displayMessage("Make sure you entered password twice correctly", "Error")
                 return
             }
+            
+            // update password
             Auth.auth().currentUser?.updatePassword(to: newPassword!, completion: { (error) in
                 if error != nil {
                     self.busy.stopAnimating()
                     self.displayMessage(error!.localizedDescription, "Error")
                     return
                 }
+                
+                // stop animating the activity indicator and display success result
                 self.busy.stopAnimating()
                 self.displayMessage("Password changed!", "Success")
+                
+                // empty all text fields on this page
                 oldPasswordCell.passwordTextField.text = ""
                 newPasswordCell.passwordTextField.text = ""
                 newPasswordAgainCell.passwordTextField.text = ""
